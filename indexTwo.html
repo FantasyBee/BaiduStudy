@@ -1,0 +1,564 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>百度一下，你就知道</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            list-style: none;
+            text-decoration: none;
+        }
+        .topNav {
+            width: 100%;
+            height: 105px;
+            display: flex;
+            flex-direction: row;
+            flex-wrap: nowrap;
+            justify-content: space-between;
+        }
+        .leftNav {
+            width: auto;
+            display: flex;
+            flex-direction: row;
+            flex-wrap: nowrap;
+            justify-content: flex-start;
+        }
+        .leftNav .logo {
+            width: 104px;
+            height: 35px;
+            margin-left: 15px;
+            margin-top: 16px;
+            margin-right: 14px;
+        }
+        .leftNav .logo img {
+            height: 99%;
+            width: 100%;
+        }
+        /* 输入框样式 */
+        form {
+            display: flex;
+            flex-direction: row;
+            flex-wrap: nowrap;
+            margin-top: 15px;
+        }
+        .input1 input {
+            outline: none;
+            width: 589px;
+            height: 37px;
+            border: 2px solid #C4C7CE;
+            border-right: none;
+            border-radius: 10px 0 0 10px;
+            text-indent: 15px;
+            /* 设置文本缩进 */
+            z-index: 1;
+        }
+        .input1 .img-2 img {
+            max-width: 24px;
+            max-height: 21px;
+            object-fit: contain;
+            /* 或者 object-fit: cover; */
+            position: absolute;
+            left: 685px;
+            top: 35px;
+            z-index: 50;
+            transform: translateY(-50%);
+            /* 垂直居中 */
+        }
+        .input1 input:hover {
+            border-color: #A7AAB5;
+        }
+        .input1.clicked input {
+            outline: none;
+            border: 2px solid #4E6EF2;
+            border-right: none;
+            border-radius: 10px 0 0 0;
+            border-bottom: none;
+            padding-bottom: 2px;
+        }
+        .input1.two-clicked input {
+            outline: none;
+            border: 2px solid #4E6EF2;
+            border-right: none;
+            padding: 0;
+            border-radius: 10px 0 0 10px;
+        }
+        /* 提交样式 */
+        .input2 {
+            cursor: pointer;
+            height: 41px;
+            width: 112px;
+            color: white;
+            background-color: #4E6EF2;
+            border: 2px solid #4E6EF2;
+            border-radius: 0 10px 10px 0;
+            font-size: 17px;
+            z-index: 1;
+        }
+        .input2:hover {
+            background-color: #4662D9;
+            border-color: #4662D9;
+        }
+        /* 搜索框内清空按钮样式 */
+        .clearBtn {
+            position: absolute;
+            display: none;
+            max-width: 30px;
+            max-height: 30px;
+            z-index: 80;
+            margin-left: 510px;
+            margin-top: 6px;
+        }
+        .clearBtn img {
+            width: 100%;
+            height: 100%;
+        }
+        .clearBtn:hover {
+            cursor: pointer;
+        }
+        /* 搜索记录 */
+        .historyBox {
+            width: 100%;
+            position: absolute;
+            display: flex;
+            margin-left: 133px;
+            margin-top: 56px;
+            flex-direction: row;
+            flex-wrap: nowrap;
+            z-index: 9;
+        }
+        .search-history {
+            position: absolute;
+            width: 589px;
+            border-radius: 0 0 10px 10px;
+            margin-right: 106px;
+            height: auto;
+            max-height: 320px;
+            background-color: #ffffff;
+            border: 2px solid #4E6EF2;
+            border-top: none;
+            /* 移除原本的上边框 */
+            padding-top: 2px;
+            display: block;
+            z-index: 10;
+            overflow: auto;
+            /* 或者是 overflow: scroll; */
+        }
+        .search-history::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 50%;
+            /* 将左边框移动到父元素的中间位置 */
+            width: 95%;
+            /* 上边框长度 */
+            height: 2px;
+            /* 上边框粗细 */
+            background-color: #F2F2F2;
+            /* 上边框颜色 */
+            transform: translateX(-50%);
+            /* 使用transform属性将边框居中 */
+        }
+        .search-history .searchList {
+            line-height: 30px;
+            font-size: 13px;
+            width: 100%;
+            padding: 10px 0;
+            text-indent: 15px;
+            /* 设置文本缩进 */
+        }
+        .search-history .searchList li:hover {
+            color: #2144d1;
+            background-color: #e9e9e9;
+            cursor: pointer;
+        }
+        .rightNav {
+            margin-right: 25px;
+            margin-top: 24px;
+            width: 173px;
+            display: flex;
+            flex-direction: row;
+            flex-wrap: nowrap;
+            justify-content: space-between;
+        }
+        .home a {
+            font-size: 13px;
+            margin-top: 3px;
+            color: black;
+        }
+        /* 右半边 */
+        .menu .set {
+            font-size: 13px;
+            color: #343535;
+        }
+        .menu .set:hover {
+            color: blue;
+        }
+        .m-menu {
+            font-size: 12px;
+            display: none;
+            width: 80px;
+            position: absolute;
+            background-color: rgb(255, 255, 255);
+            z-index: 90;
+            text-align: center;
+            transform: translateX(-35%);
+            border: 1px solid #BBBBBB;
+            border-radius: 20px;
+            box-shadow:
+                0 0 2px rgba(234, 233, 233, 0.8),
+                1px 0 5px rgba(237, 237, 237, 0.8),
+                0 1px 5px rgba(238, 238, 238, 0.8),
+                -1px 0 5px rgba(212, 212, 212, 0.8);
+        }
+        .m-menu li {
+            padding: 2px 0;
+            text-align: center;
+            line-height: 20px;
+        }
+        .m-menu .changeSkin {
+            margin-top: 10px;
+        }
+        .m-menu .changeSkin::before {
+            content: "";
+            display: block;
+            position: absolute;
+            margin: -5px auto 0;
+            width: 50%;
+            height: 1px;
+            /* 边框粗细 */
+            transform: translateX(50%);
+            /* 通过负的自身宽度的一半来向左移动 */
+            border-top: 1px solid #afafaf;
+            /* 边框样式 */
+        }
+        .m-menu li a {
+            color: black;
+        }
+        .m-menu li a:hover {
+            color: blue;
+        }
+        .menu:hover .m-menu {
+            display: block;
+        }
+        /*右半边-登录按钮 */
+        .rightNav .loginbtn {
+            font-size: 13px;
+            color: white;
+        }
+        .rightNav .loginbtn {
+            padding: 4px 11px;
+            text-align: center;
+            background-color: #4e6ef2;
+            border-radius: 5px;
+        }
+        .rightNav .loginbtn:hover {
+            background-color: #4662d0;
+        }
+        .navIcon {
+            width: 100%;
+            display: flex;
+            flex-direction: row;
+            flex-wrap: nowrap;
+            margin-top: -45px;
+        }
+        .navIconBox {
+            width: 750px;
+            height: 80px;
+            display: flex;
+            flex-direction: row;
+            flex-wrap: nowrap;
+            justify-content: flex-start;
+            margin-left: 145px;
+        }
+        .navIconBox li {
+            width: 53px;
+            height: 40px;
+            margin-right: 17px;
+        }
+        .navIconBox li img {
+            width: 100%;
+            height: 100%;
+        }
+        .commendText {
+            font-size: 13px;
+            color: #6f6f6f;
+            margin-top: 3px;
+            margin-left: 132px;
+        }
+    </style>
+</head>
+
+<body>
+    <!-- 搜索历史--搜索建议框，没改名字而已，借用了搜索记录的样式 -->
+    <div class="historyBox">
+        <div class="search-history">
+            <ul class="searchList">
+                <li></li>
+                <li></li>
+                <li></li>
+                <li></li>
+                <li></li>
+                <li></li>
+                <li></li>
+                <li></li>
+                <li></li>
+                <li></li>
+            </ul>
+        </div>
+    </div>
+
+
+
+    <nav class="topNav">
+        <!-- 头部左半边，即logo和搜索框 -->
+        <div class="leftNav">
+            <div class="logo"><a href="https://www.baidu.com/"><img
+                        src="https://img2.imgtp.com/2024/04/16/e9ZhpkJI.png"></a></div>
+            <form>
+                <div class="input1">
+                    <input type="text" name="search" />
+                    <a class="img-2" href="#"><img src="https://img2.imgtp.com/2024/04/15/hNj0zdZP.png" /></a>
+                </div>
+                <span class="clearBtn"><img src="https://img2.imgtp.com/2024/04/09/aGMZybQ6.png"></span>
+                <input class="input2" type="submit" value="百度一下" />
+            </form>
+        </div>
+        <!-- 头部右半边，即logo和搜索框 -->
+        <div class="rightNav">
+            <div class="home"><a href="#">百度首页</a></div>
+            <div class="menu">
+                <a class="set" href="#">设置</a>
+                <ul class="m-menu">
+                    <li><a href="#">搜索设置</a></li>
+                    <li><a href="#">高级搜索</a></li>
+                    <li><a href="#">关闭预测</a></li>
+                    <li><a href="#">隐私设置</a></li>
+                    <li><a href="#">隐藏资讯</a></li>
+                    <li><a href="#">关闭播报</a></li>
+                    <li class="changeSkin"><a href="#">更换皮肤</a></li>
+                </ul>
+            </div>
+            <div> <a class="loginbtn" href="#">登录</a></div>
+        </div>
+    </nav>
+
+
+    <!-- 搜索框下面的一些内容 -->
+    <div class="navIcon">
+        <ul class="navIconBox">
+            <li class="boxChild"><a href="#"><img src="https://img2.imgtp.com/2024/04/16/my2sBSRd.png"></a></li>
+            <li class="boxChild"><a href="#"><img src="https://img2.imgtp.com/2024/04/16/OgYS1FMs.png"></a></li>
+            <li class="boxChild"><a href="#"><img src="https://img2.imgtp.com/2024/04/16/fTWOciN1.png"></a></li>
+            <li class="boxChild"><a href="#"><img src="https://img2.imgtp.com/2024/04/16/ZIcCTQxN.png"></a></li>
+            <li class="boxChild"><a href="#"><img src="https://img2.imgtp.com/2024/04/16/vKTEf8EL.png"></a></li>
+
+            <li class="boxChild"><a href="#"><img src="https://img2.imgtp.com/2024/04/16/TInf6zrz.png"></a></li>
+            <li class="boxChild"><a href="#"><img src="https://img2.imgtp.com/2024/04/16/cFk44NQO.png"></a></li>
+            <li class="boxChild"><a href="#"><img src="https://img2.imgtp.com/2024/04/16/HZnmv02L.png"></a></li>
+            <li class="boxChild"><a href="#"><img src="https://img2.imgtp.com/2024/04/16/o769YMPl.png"></a></li>
+            <li class="boxChild"><a href="#"><img src="https://img2.imgtp.com/2024/04/16/XmySRzKT.png"></a></li>
+        </ul>
+    </div>
+
+    <div class="commendText">
+        <p>请按"回车"键发起检索</p>
+    </div>
+
+
+    <script>
+        //获取搜索框的各种元素
+        var searchForm = document.querySelector("form");
+        var searchInput = document.querySelector('input[name="search"]');
+        var searchInput = document.querySelector(".input1 input");
+        var searchList = document.querySelector(".searchList");
+        var searchHistory = document.querySelector(".search-history");
+        const clearBtn = document.querySelector(".clearBtn");
+        //默认关闭搜索历史框
+        searchHistory.style.display = "none";
+        // 记录是否正在搜索
+        var isSearching = false; 
+
+        //为清空搜索框内容做的方法实现
+        function clearInput() {
+            searchInput.value = "";
+            clearBtn.style.display = "none";
+        }
+        clearBtn.addEventListener("click", clearInput);
+        // 为搜索框加内容监听器，控制清空按钮显示与否
+        searchInput.addEventListener("input", function () {
+            var keyword = searchInput.value.trim();
+            // 如果搜索框不为空，则显示删除按钮，否则隐藏
+            if (keyword !== "") {
+                clearBtn.style.display = "block";
+            } else {
+                clearBtn.style.display = "none";
+            }
+        });
+
+
+        //为搜索框以及搜索按钮整个大区域添加监听器
+        searchForm.addEventListener("submit", function (event) {
+            // 阻止表单默认的提交行为
+            event.preventDefault();
+            // 获取搜索框内关键词
+            var searchWord = searchInput.value.trim();
+            if (searchWord !== "") {
+                // 调用搜索函数
+                searchIng(searchWord);
+                // 保存搜索历史
+                saveSearchHistory(searchWord);
+                // 清空搜索框内容
+                searchInput.value = "";
+            }
+        });
+        // 为搜索建议列表项添加点击事件监听器
+        searchList.addEventListener('click', function (event) {
+            // 确保点击的是列表项（li 元素）
+            if (event.target.tagName === 'LI') {
+                // 获取点击的搜索建议文本
+                var suggestionText = event.target.textContent;
+                // 将搜索建议文本赋值给搜索输入框
+                searchInput.value = suggestionText;
+                // 调用搜索方法并传入搜索建议文本
+                searchIng(suggestionText);
+                //保存到本地搜索记录
+                saveSearchHistory(suggestionText);
+                // 清空搜索框内容
+                searchInput.value = "";
+            }
+        });
+
+        //百度搜索方法实现
+        function searchIng(searchKeyWord) {
+            // 检查搜索关键词是否为空
+            if (searchKeyWord !== "") {
+                // 构建搜索 URL，将搜索关键词作为参数
+                var searchUrl =
+                    "https://www.baidu.com/s?wd=" + encodeURIComponent(searchKeyWord);
+                // 重定向到搜索 URL
+                window.location.href = searchUrl;
+            }
+        }
+
+        //存储搜索记录的方法实现
+        function saveSearchHistory(keywordTotal) {
+            //获取本地存储，并且清空
+            var searches = localStorage.getItem("searches");
+            searches = searches ? JSON.parse(searches) : [];
+            searches.unshift(keywordTotal);
+            if (searches.length > 20) {
+                searches.pop();
+            }
+            localStorage.setItem("searches", JSON.stringify(searches));
+        }
+
+
+        //下面三个内容顺序是先对searchInput做监听，调用获取百度搜索建议的方法，然后再调用处理建议数据的方法。
+        // 获取并展示搜索建议的函数,调用百度搜索推荐的API
+        function fetchSearchSuggestions(query) {
+            // 构造百度搜索建议的 API 请求链接，并且调用了handleSuggestions方法来处理接收过来的数据，并且渲染到searchList中取。
+            // p=3表示只获取前3个搜索建议，cb=handleSuggestions指定了回调函数名为handleSuggestions也就是下面定义的处理建议数据的方法
+            //t=Date.now()则添加了一个时间戳，以避免缓存。
+            var apiUrl = 'http://suggestion.baidu.com/su?wd=' + encodeURIComponent(query) + '&p=3&cb=handleSuggestions&t=' + Date.now();
+            // 使用 JSONP 请求百度搜索建议 API，JSONP是一种跨域请求的方法
+            var script = document.createElement('script');
+            //将定义好的调用建议API的URL赋值给刚定义好的script
+            script.src = apiUrl;
+            //浏览器会自动执行这个URL返回的脚本，从而获取搜索建议数据
+            document.body.appendChild(script);
+        }
+        // 搜索输入框的输入事件监听器
+        searchInput.addEventListener('input', function (event) {
+            var query = event.target.value.trim();
+            if (query.length > 0) {
+                // 获取搜索建议
+                fetchSearchSuggestions(query);
+            } else {
+                // 如果输入为空，则隐藏搜索历史框
+                searchHistory.style.display = "none";
+            }
+        });
+        // 处理从百度搜索建议 API 返回的数据
+        function handleSuggestions(data) {
+            // 清空之前的建议
+            searchList.innerHTML = '';
+            // 渲染新的建议
+            // 遍历返回的数据中的s属性（一个包含建议的数组）
+            data.s.forEach(suggestion => {
+                var li = document.createElement('li');
+                li.textContent = suggestion;
+                searchList.appendChild(li);
+            });
+            // 显示搜索历史框
+            searchHistory.style.display = "block";
+        }
+
+
+        //下面两个监听器是为了处理搜索框的样式所做的
+        // 为搜索框添加事件处理
+        searchInput.addEventListener("click", function () {
+            setTimeout(function () {
+                if (searchInput.value.trim() === "") {
+                    searchInput.parentNode.classList.add("two-clicked");
+                    searchInput.parentNode.classList.remove("clicked");
+                }
+            }, 50); // 设置一个延迟，确保在执行之前输入框的值不会被清空
+        });
+        // 为搜索框添加输入事件处理
+        searchInput.addEventListener("input", function () {
+            if (searchInput.value.trim() !== "") {
+                searchInput.parentNode.classList.add("clicked");
+                searchInput.parentNode.classList.remove("two-clicked");
+            } else {
+                searchInput.parentNode.classList.remove("clicked");
+                searchInput.parentNode.classList.add("two-clicked");
+            }
+        });
+
+        //为除搜索框区域以外添加监听器，以控制搜索记录的展示与隐藏，以及搜索框内容是否被转换为搜索记录的控制
+        document.addEventListener("click", function (event) {
+            if (!searchHistory.contains(event.target) && event.target !== searchInput) {
+                searchInput.parentNode.classList.remove("clicked");
+                searchInput.parentNode.classList.remove("two-clicked");
+                searchHistory.style.display = "none";
+            }
+        });
+
+
+        // 获取 URL 中的参数
+        //这个方法我是找资料学的，还不是很懂，但是能用
+        function getUrlParameter(name) {
+           // name = name.replace(/[\[]/, '\\[').replace(/[\]]/, '\\]');
+            // 使用 RegExp 构造函数来创建正则表达式对象
+            // [\\?&]表示匹配一个问号 ? 或者一个和号 &，因为这些符号是 URL 参数的分隔符。
+            // [^&#]* 匹配任意数量的非 & 和 # 的字符，这样就能够捕获参数值。
+            //var regex = new RegExp('[\\?&]' + name + '=([^&#]*)');
+           // var results = regex.exec(location.search);
+            //return results === null ? '' : decodeURIComponent(results[1].replace(/\+/g, ' '));
+            // return location.search;
+            console.log(location);
+        }
+
+        // 在页面加载完成后执行
+        window.onload = function() {
+            // 获取 URL 中的搜索词参数
+            var searchWord = getUrlParameter('search');
+            
+            // 如果存在搜索词参数，则将其设置为搜索框的值
+            if (searchWord !== "") {
+                // 将搜索词设置为搜索框的值
+                searchInput.value = searchWord;
+                searchInput.parentNode.classList.add("clicked");
+                searchInput.focus();
+                fetchSearchSuggestions(searchWord);
+            }
+        };
+
+    </script>
+</body>
+
+</html>

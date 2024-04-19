@@ -1,0 +1,3934 @@
+    /* 全局 */
+    /* 定义全局变量 */
+    :root {
+        --nav-left-head: #1A1A1A;
+        --nav-left-head-hover: blue;
+        --g_more: #343535;
+        --g_more-hover: blue;
+        --more-g-box-word: #000;
+        --nav-right-head: #343535;
+        --nav-right-head-hover: blue;
+        --center-hotSearch: #000;
+        --center-hotSearch-hover: blue;
+        --center-list: #222;
+        --center-list-hover: #315EFB;
+        --bottom-icon-text: #000;
+        --g-BoxBack: #343535;
+        --g-BoxBack-hover: blue;
+        --footer-colorChange: #b5b4b4;
+        --footer-colorChange-hover: black;
+    }
+
+    /* 在不同主题下修改变量 */
+    [body-theme="white"] {
+        --nav-left-head: #1A1A1A;
+        --nav-left-head-hover: blue;
+        --g_more: #343535;
+        --g_more-hover: blue;
+        --more-g-box-word: #000;
+        --nav-right-head: #343535;
+        --nav-right-head-hover: blue;
+        --center-hotSearch: #000;
+        --center-hotSearch-hover: blue;
+        --center-list: #222;
+        --center-list-hover: #315EFB;
+        --bottom-icon-text: #000;
+        --g-BoxBack: #343535;
+        --g-BoxBack-hover: blue;
+        --footer-colorChange: #b5b4b4;
+        --footer-colorChange-hover: black;
+    }
+
+    [body-theme="black"] {
+        --nav-left-head: white;
+        --nav-left-head-hover: #FFFF00;
+        --g_more: #EFCF58;
+        --g_more-hover: #FFFF00;
+        --more-g-box-word: #A8ACAD;
+        --nav-right-head: #EFCF58;
+        --nav-right-head-hover: #FFFF00;
+        --center-hotSearch: #EFCF58;
+        --center-hotSearch-hover: #FFFF00;
+        --center-list: #EFCF58;
+        --center-list-hover: #315EFB;
+        --bottom-icon-text: #b5b4b4;
+        --g-BoxBack: #EA80FF;
+        --g-BoxBack-hover: blue;
+        --footer-colorChange: #EFCF58;
+        --footer-colorChange-hover: #FFFF00;
+    }
+
+    [body-theme="blue"] {
+        --nav-left-head: white;
+        --nav-left-head-hover: #FFFF00;
+        --g_more: #EFCF58;
+        --g_more-hover: #FFFF00;
+        --more-g-box-word: #A8ACAD;
+        --nav-right-head: #EFCF58;
+        --nav-right-head-hover: #FFFF00;
+        --center-hotSearch: #EFCF58;
+        --center-hotSearch-hover: #FFFF00;
+        --center-list: #EFCF58;
+        --center-list-hover: #315EFB;
+        --bottom-icon-text: #b5b4b4;
+        --g-BoxBack: #EA80FF;
+        --g-BoxBack-hover: blue;
+        --footer-colorChange: #EFCF58;
+        --footer-colorChange-hover: #FFFF00;
+    }
+
+    /* 声明：所有的代码注解，大部分存在于最大展示页面部分，即max-width:1200px */
+    /* 声明：所有的代码注解，大部分存在于最大展示页面部分，即max-width:1200px */
+    /* 声明：所有的代码注解，大部分存在于最大展示页面部分，即max-width:1200px */
+
+
+    * {
+        margin: 0;
+        padding: 0;
+        list-style: none;
+        text-decoration: none;
+    }
+
+
+    /* 尾部元素的处理 */
+    .notShow6,
+    .notShow5,
+    .notShow4,
+    .notShow3,
+    .notShow2 {
+        display: block;
+    }
+
+    .notShow1 {
+        display: none;
+    }
+
+    .show1,
+    .show2,
+    .show3,
+    .show4 {
+        display: none;
+    }
+
+    .footBox {
+        width: 450px;
+        height: auto;
+        background-color: white;
+        z-index: 60;
+        display: none;
+        position: absolute;
+        bottom: 50px;
+        right: 120px;
+        border-radius: 10px;
+        padding: 10px;
+        box-shadow: 0px 0px 10px 5px rgba(0, 0, 0, 0.1);
+        /* 水平偏移，垂直偏移，模糊程度，阴影尺寸，颜色 */
+    }
+
+    .footBox li {
+        display: flex;
+        flex-direction: row;
+        flex-wrap: nowrap;
+        padding: 2px 0;
+    }
+    .footBox li p {
+        color: #717482;
+        font-size: 12px;
+    }
+
+
+
+
+    @media screen and (min-width: 1200px) {
+
+        /* 全局 */
+        .body {
+            width: 100%;
+        }
+
+        /* 辅助模式 */
+        .modeBlock {
+            width: 100%;
+            height: 135px;
+            background-color: #EEEEEE;
+            /* 设置背景颜色，可根据需求修改 */
+            position: fixed;
+            /* 使用 fixed 定位，让该块固定在页面顶部 */
+            top: 0;
+            /* 距离页面顶部的距离为 0 */
+            left: 0;
+            /* 距离页面左侧的距离为 0 */
+            z-index: 9;
+            /* 设置 z-index 以保证该块在其他元素之上 */
+            display: none;
+        }
+
+        /* 占位符 */
+        .placeholder {
+            width: 100%;
+            height: 135px;
+            /* 与顶部块高度相同 */
+            display: none;
+        }
+
+        /* 辅助模式的父盒子 */
+        .parent {
+            width: auto;
+            display: flex;
+            margin-left: 85px;
+            /* 整体相对于左侧偏移50px */
+            flex-wrap: nowrap;
+            /* 允许子元素换行 */
+            overflow: hidden;
+        }
+
+        /* 辅助模式的子盒子 */
+        .child {
+            width: 77px;
+            height: 115px;
+            box-sizing: border-box;
+            border: 1px solid #EDEDED;
+            /* 边框样式，2px 的实线边框，颜色为黑色，可根据需要调整颜色 */
+            border-radius: 20px;
+            /* 边框弧度，设置为子元素高度的一半 */
+            background-color: #fff;
+            /* 背景颜色，白色 */
+
+            /* 盒子之间的间距 */
+            margin: 15px 10px 0 2px;
+            overflow: hidden;
+        }
+
+        /* 辅助模式的其中几个盒子需要与前面扩大间距 */
+        .special {
+            padding: 0;
+            margin-left: 20px;
+        }
+
+        .child img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            /* 确保图片完全填充父元素 */
+        }
+
+
+
+
+        /* 头部导航栏 */
+        /* 左半边 */
+        .left-head ul {
+            display: flex;
+            flex-direction: row;
+            padding: 0 23px 0;
+            flex-wrap: nowrap;
+            height: 60px;
+            line-height: 60px;
+            overflow: hidden;
+        }
+
+        .left-head a {
+            font-size: 13px;
+            line-height: 23px;
+            color: var(--nav-left-head);
+            margin: 20px 24px 0 0;
+        }
+
+        .left-head ul li a:hover {
+            color: var(--nav-left-head-hover);
+        }
+
+        /* 更多，下拉弹框 */
+        .g-more a {
+            color: var(--g_more);
+        }
+
+        .g-more a:hover {
+            color: var(--g_more-hover);
+        }
+
+        .more {
+            visibility: hidden;
+            position: absolute;
+            top: 0;
+            left: 0;
+            margin-top: 50px;
+            margin-left: 280px;
+            box-shadow: 0px 4px 5px 3px rgb(211, 211, 211, 0.4);
+            border-radius: 20px;
+            display: flex;
+            justify-content: flex-start;
+            flex-wrap: wrap;
+            width: 220px;
+            height: 320px;
+            background-color: white;
+            z-index: 8;
+        }
+
+        .more .g-box {
+            width: calc(30% - 3px);
+            /* 20px 是你想要的左右间距的总和 */
+            height: 80px;
+            margin: 5px;
+            /* 通过 margin 来模拟空白间隔 */
+            border-radius: 10px;
+            background-color: white;
+        }
+
+        .more .g-box a {
+            height: 100%;
+            width: 100%;
+        }
+
+        .more .g-box .word {
+            font-size: 13px;
+            text-align: center;
+            color: var(--more-g-box-word);
+        }
+
+        .more .g-box .word:hover {
+            color: blue;
+        }
+
+        .more .g-box img {
+            display: block;
+            margin: 0 auto;
+            margin-top: 10px;
+            border-radius: 10px;
+            width: 44px;
+            height: 44px;
+            border: #BBBBBB solid 0.5px;
+        }
+
+        .g-box-back {
+            width: 220px;
+            height: 33px;
+            margin: 5px 8px 10px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            border-radius: 10px;
+        }
+
+        .g-box-back a {
+            display: inline-block;
+            margin: 0 auto;
+            text-align: center;
+            align-items: center;
+            color: var(--g-BoxBack);
+        }
+
+        .g-more:hover~.more {
+            visibility: visible;
+        }
+
+        .more:hover {
+            visibility: visible;
+        }
+
+        .g-box:hover {
+            background-color: rgb(241, 243, 253);
+        }
+
+        .g-box:hover .word {
+            color: blue;
+        }
+
+        .g-box-back a:hover {
+            color: var(--g-BoxBack-hover);
+        }
+
+        .g-box-back:hover {
+            background-color: rgb(241, 243, 253);
+            cursor: pointer;
+        }
+
+        .g-box-back:hover a {
+            color: var(--g-BoxBack-hover);
+            /* 设置链接颜色 */
+        }
+
+        /* 右半边 */
+        .right-head {
+            float: right;
+            height: 60px;
+            line-height: 60px;
+        }
+
+        .menu {
+            position: absolute;
+            right: 70px;
+            width: 60px;
+        }
+
+        .menu .set {
+            font-size: 13px;
+            line-height: 23px;
+            color: var(--nav-right-head);
+            margin: 20px 25px 0 0;
+        }
+
+        .menu .set:hover {
+            color: var(--nav-right-head-hover);
+        }
+
+        .m-menu {
+            font-size: 12px;
+            display: none;
+            width: 80px;
+            position: absolute;
+            background-color: rgb(255, 255, 255);
+            z-index: 90;
+            text-align: center;
+            transform: translateX(-35%);
+            border: 1px solid #BBBBBB;
+            border-radius: 20px;
+            box-shadow:
+                0 0 2px rgba(234, 233, 233, 0.8),
+                1px 0 5px rgba(237, 237, 237, 0.8),
+                0 1px 5px rgba(238, 238, 238, 0.8),
+                -1px 0 5px rgba(212, 212, 212, 0.8);
+        }
+
+        .m-menu li {
+            padding: 2px 0;
+            text-align: center;
+            line-height: 20px;
+        }
+
+        .m-menu .changeSkin {
+            margin-top: 10px;
+        }
+
+        .m-menu .changeSkin::before {
+            content: "";
+            display: block;
+            position: absolute;
+            margin: -5px auto 0;
+            width: 50%;
+            height: 1px;
+            /* 边框粗细 */
+            transform: translateX(50%);
+            /* 通过负的自身宽度的一半来向左移动 */
+            border-top: 1px solid #afafaf;
+            /* 边框样式 */
+        }
+
+        .m-menu li a {
+            color: black;
+        }
+
+        .m-menu li a:hover {
+            color: blue;
+        }
+
+        .menu:hover .m-menu {
+            display: block;
+        }
+
+        /*右半边-登录按钮 */
+        .right-head .loginbtn {
+            font-size: 13px;
+            line-height: 23px;
+            color: white;
+            margin: 20px 25px 0 0;
+        }
+
+        .right-head .loginbtn {
+            padding: 3px 11px;
+            margin-left: 10px;
+            text-align: center;
+            background-color: #4e6ef2;
+            border-radius: 5px;
+        }
+
+        .right-head .loginbtn:hover {
+            background-color: #4662d0;
+        }
+
+        /* 右半边AIbtn */
+        .AIbtn {
+            width: 40px;
+            height: 40px;
+            border-radius: 30px;
+            position: absolute;
+            z-index: 50;
+            overflow: hidden;
+            right: 30px;
+            top: 200px;
+        }
+
+        .AIbtn img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            /* 确保图片完全填充父元素 */
+        }
+
+        /* 搜索大区域 */
+        .c-center {
+            width: 100%;
+            margin: 0 auto;
+            overflow: hidden;
+        }
+
+        .c-center .box {
+            width: 100%;
+        }
+
+        /* logo */
+        .c-center .logo {
+            width: 450px;
+            margin: 0 auto;
+            margin-top: -5px;
+            text-align: center;
+        }
+
+        .c-center img {
+            width: 60%;
+            height: 129px;
+            transition: width 1s ease;
+        }
+
+        /* 搜索框区域 */
+        form {
+            width: 100%;
+            height: 100%;
+            position: relative;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 10px 0;
+        }
+
+        /* 搜索框内清空按钮样式 */
+        /* .clearBtn {
+            position: absolute;
+            display: none;
+            max-width: 30px;
+            max-height: 30px;
+            z-index: 80;
+            margin-left: 240px;
+            margin-top: 3px;
+        }
+        .clearBtn img {
+            width: 100%;
+            height: 100%;
+        }
+        .clearBtn:hover {
+            cursor: pointer;
+        } */
+
+        /* 输入框样式 */
+        .input1 {
+            position: relative;
+            height: auto;
+        }
+
+        .input1 input {
+            outline: none;
+            width: 546px;
+            height: 40px;
+            border: 2px solid #C4C7CE;
+            border-right: none;
+            border-radius: 10px 0 0 10px;
+            text-indent: 15px;
+            /* 设置文本缩进 */
+            z-index: 1;
+        }
+
+        .input1 input:hover {
+            border-color: #A7AAB5;
+        }
+
+        .input1.clicked input {
+            outline: none;
+            border: 2px solid #4E6EF2;
+            border-right: none;
+            border-radius: 10px 0 0 0;
+            border-bottom: none;
+            padding-bottom: 2px;
+        }
+
+
+        .input1.two-clicked input {
+            outline: none;
+            border: 2px solid #4E6EF2;
+            border-right: none;
+            padding: 0;
+            border-radius: 10px 0 0 10px;
+        }
+
+
+        /* 搜索框内图标样式 */
+        .input1 .img-1 img {
+            max-width: 30px;
+            max-height: 30px;
+            object-fit: contain;
+            /* 或者 object-fit: cover; */
+            position: absolute;
+            right: 9%;
+            top: 50%;
+            transform: translateY(-50%);
+            /* 垂直居中 */
+        }
+
+        .input1 .img-2 img {
+            max-width: 24px;
+            max-height: 21px;
+            object-fit: contain;
+            /* 或者 object-fit: cover; */
+            position: absolute;
+            right: 3%;
+            top: 50%;
+            transform: translateY(-50%);
+            /* 垂直居中 */
+        }
+
+        .input1 img:hover {
+            cursor: pointer;
+        }
+
+        /* 提交样式 */
+        .input2 {
+            cursor: pointer;
+            height: 44px;
+            width: 108px;
+            color: white;
+            background-color: #4E6EF2;
+            border: 2px solid #4E6EF2;
+            border-radius: 0 10px 10px 0;
+            font-size: 17px;
+            z-index: 1;
+        }
+
+        .input2:hover {
+            background-color: #4662D9;
+            border-color: #4662D9;
+        }
+
+        /* 搜索记录 */
+        .historyBox {
+            width: 100%;
+            position: absolute;
+            display: flex;
+            justify-content: center;
+            margin-top: 182px;
+            justify-content: space-around;
+            flex-direction: row;
+            flex-wrap: nowrap;
+            z-index: 9;
+        }
+
+        .search-history {
+            position: absolute;
+            width: 546px;
+            border-radius: 0 0 10px 10px;
+            margin-right: 106px;
+            height: auto;
+            max-height: 320px;
+            background-color: #ffffff;
+            border: 2px solid #4E6EF2;
+            border-top: none;
+            /* 移除原本的上边框 */
+            padding-top: 2px;
+            display: none;
+            z-index: 10;
+            overflow: auto;
+            /* 或者是 overflow: scroll; */
+        }
+
+        .search-history::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 50%;
+            /* 将左边框移动到父元素的中间位置 */
+            width: 95%;
+            /* 上边框长度 */
+            height: 2px;
+            /* 上边框粗细 */
+            background-color: #F2F2F2;
+            /* 上边框颜色 */
+            transform: translateX(-50%);
+            /* 使用transform属性将边框居中 */
+        }
+
+        .search-history .searchList {
+            line-height: 30px;
+            font-size: 13px;
+            width: 100%;
+            padding: 10px 0;
+            text-indent: 15px;
+            /* 设置文本缩进 */
+        }
+
+        .search-history .searchList li:hover {
+            color: #2144d1;
+            background-color: #e9e9e9;
+            cursor: pointer;
+        }
+
+
+        /* 删除按钮图标样式 */
+        .delete-icon {
+            display: none;
+            /* 默认隐藏 */
+            cursor: pointer;
+            float: right;
+            margin-right: 20px;
+            color: #9195A3;
+        }
+
+        .delete-icon:hover {
+            color: #2144d1;
+        }
+
+        /* 显示删除图标 */
+        li:hover .delete-icon {
+            display: inline-block;
+        }
+
+
+
+        /* 热搜的两个按钮 */
+        .key {
+            padding-top: 20px;
+            width: 650px;
+            /* 调整宽度以便按钮能够分散在两边 */
+            margin: 0 auto;
+            display: flex;
+            height: auto;
+            justify-content: space-between;
+            flex-direction: row;
+            flex-wrap: nowrap;
+            margin-top: 15px;
+        }
+
+        .key .baidu-hot-search {
+            width: auto;
+            height: auto;
+            display: flex;
+            flex-direction: row;
+            flex-wrap: nowrap;
+
+        }
+
+        .key .baidu-hot-search a {
+            color: var(--center-hotSearch);
+            font-weight: bolder;
+            font-size: 15px;
+        }
+
+        .key .baidu-hot-search a:hover {
+            color: var(--center-hotSearch-hover);
+        }
+
+        .key .baidu-hot-search .hockIcon {
+            transform: translate(0, 2px);
+            height: 16px;
+            width: 20px;
+        }
+
+        .hockIcon img {
+            width: 100%;
+            height: 100%;
+        }
+
+        .key .h-icon a img {
+            max-width: 20px;
+            max-height: 20px;
+            object-fit: contain;
+            margin: -1px 2px 1px 1px;
+            vertical-align: middle;
+            /* 垂直居中对齐 */
+            transition: transform 0.3s ease;
+            /* 添加过渡效果 */
+        }
+
+        .key .h-icon a {
+            color: #626675;
+            font-weight: normal;
+            font-size: 14px;
+        }
+
+        .key .h-icon a:hover {
+            cursor: pointer;
+        }
+
+        .key a:hover {
+            color: #00e;
+            cursor: pointer;
+        }
+
+
+
+        /* 热搜榜 */
+        .list {
+            width: 100%;
+            /* 设置为100%宽度 */
+            max-width: 650px;
+            /* 最大宽度为1000px */
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 40px;
+        }
+
+
+        .middle-context {
+            list-style: none;
+            padding: 0;
+        }
+
+        .middle-context li {
+            height: 30px;
+            line-height: 30px;
+            font-size: 16px;
+            color: #9195a3;
+            padding-top: 5px;
+        }
+
+        .c-center ul li a {
+            color: var(--center-list);
+            font-size: 16px;
+            padding-left: 15px;
+        }
+
+        .c-center ul li a:hover {
+            color: var(--center-list-hover);
+            text-decoration: underline;
+        }
+
+        .custom-link {
+            color: var(--center-list);
+        }
+
+        .custom-link:hover {
+            color: var(--center-list-hover);
+        }
+
+        .top {
+            display: inline-block;
+            vertical-align: middle;
+            line-height: 30px;
+            width: 16px;
+            height: 16px;
+        }
+
+        .one {
+            color: #fe2d46 !important;
+            display: inline-block;
+            vertical-align: middle;
+            line-height: 30px;
+            margin: 0;
+        }
+
+        .two {
+            color: #f60 !important;
+        }
+
+        .three {
+            color: #faa90e !important;
+        }
+
+        .new,
+        .hot {
+            border-radius: 5px;
+            font-size: 11px;
+            color: #fff;
+            text-align: center;
+            line-height: 29px;
+            margin-left: 7px;
+            padding: 1px 3px;
+            vertical-align: top;
+        }
+
+        .new {
+            background-color: rgb(250, 75, 75);
+        }
+
+        .hot {
+            background-color: #f60;
+        }
+
+
+
+        /* 页面右下侧图标样式 */
+        .right-icon {
+            display: flex;
+            flex-direction: column;
+            position: absolute;
+            bottom: 65px;
+            height: 85px;
+            right: 0;
+            justify-content: flex-start;
+            align-items: center;
+            width: 95px;
+        }
+
+
+
+        .icon-text {
+            position: fixed;
+            visibility: hidden;
+            bottom: 113px;
+            right: 80px;
+            /* 使用 visibility 属性隐藏元素 */
+            font-size: 13px;
+            width: 90px;
+            box-sizing: border-box;
+            height: 30px;
+            text-align: center;
+            color: var(--bottom-icon-text);
+            /* 水平居中 */
+            line-height: 30px;
+            /* 和盒子高度相等的值 */
+            border-radius: 5px;
+            box-shadow:
+                0 0 10px rgba(159, 159, 159, 0.3),
+                /* 增加模糊半径并降低透明度 */
+                1px 0 10px rgba(159, 159, 159, 0.3),
+                0 1px 10px rgba(159, 159, 159, 0.3),
+                -1px 0 10px rgba(80, 80, 80, 0.3);
+            /* 降低边框阴影的颜色透明度 */
+        }
+
+
+        .icon-blog {
+            display: none;
+            position: absolute;
+            text-align: center;
+            align-items: center;
+            width: 250px;
+            height: 100px;
+            border-radius: 20px;
+            background-color: white;
+            box-shadow:
+                0 0 8px rgba(240, 240, 240, 0.7),
+                /* 更浅的灰色阴影 */
+                2px 0 8px rgba(240, 240, 240, 0.7),
+                0 2px 8px rgba(240, 240, 240, 0.7),
+                -2px 0 8px rgba(240, 240, 240, 0.7);
+            right: 80px;
+            overflow: hidden;
+            bottom: 65px;
+        }
+
+        .icon-blog img {
+            width: 90%;
+            height: 90%;
+            object-fit: cover;
+            /* 确保图片完全填充父元素 */
+        }
+
+
+        .iconBox {
+            width: 40px;
+            height: 85px;
+            /* background-color: #4662d0; */
+            border-radius: 30px;
+            background-color: white;
+        }
+
+
+        .right-icon1 {
+            max-width: 40px;
+            max-height: 40px;
+            margin-bottom: 5px;
+            border-radius: 30px;
+            overflow: hidden;
+            background-color: white;
+        }
+
+        .right-icon1 img {
+            width: 100%;
+            height: 100%;
+        }
+
+        .right-icon2 {
+            max-width: 40px;
+            max-height: 40px;
+            right: 0;
+            bottom: 15%;
+            border-radius: 30px;
+            overflow: hidden;
+        }
+
+        .right-icon2 img {
+            width: 100%;
+            height: 100%;
+        }
+
+        .right-icon1:hover {
+            box-shadow: 0 3px 5px rgba(67, 67, 67, 0.5);
+            /* 设置阴影效果 */
+            cursor: pointer;
+        }
+
+        .right-icon2:hover {
+            box-shadow: 0 3px 5px rgba(67, 67, 67, 0.5);
+            /* 设置阴影效果 */
+            cursor: pointer;
+        }
+
+
+
+
+        /* 尾部 */
+        footer {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+        }
+
+        .c-foot {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-wrap: wrap;
+            /* 如果内容过多，允许换行 */
+            list-style-type: none;
+            margin: 0;
+            bottom: 0;
+        }
+
+        .c-foot li {
+            padding: 0 6px;
+        }
+
+        .c-foot a {
+            text-decoration: none;
+            color: #b5b4b4;
+            display: inline-block;
+            padding: 3px 0;
+            /* 设置链接的内边距 */
+            font-size: 12px;
+            letter-spacing: -0.1px;
+            /* 负值可以使字间距缩小 */
+        }
+
+        .c-foot .colorChange a {
+            color: var(--footer-colorChange);
+        }
+
+        .c-foot .colorChange a:hover {
+            color: var(--footer-colorChange-hover);
+        }
+
+        .c-foot .footImage2 a img,
+        .c-foot .footImage1 a img {
+            max-width: 28px;
+            max-height: 28px;
+        }
+
+        .c-foot .footImage2 a img {
+            margin-left: -10px;
+            margin-bottom: -5px;
+        }
+
+    }
+
+
+
+    /* 登录显示块 */
+    /* 遮罩层样式 */
+    .total {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(10, 10, 10, 0.5);
+        /* 半透明黑色背景 */
+        z-index: 88;
+        display: none;
+        /* 确保遮罩层在最上层 */
+    }
+
+    .loginbtn-home {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        align-items: center;
+        text-align: center;
+        width: 800px;
+        height: 400px;
+        z-index: 99;
+        background-color: #ffffff;
+        border-radius: 15px;
+        /* 添加圆角 */
+        box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+        /* 添加阴影 */
+        display: flex;
+        flex-direction: row;
+        justify-content: flex-start;
+        overflow: hidden;
+        /* 隐藏超出父元素部分的内容 */
+    }
+
+    .left-home {
+        display: flex;
+        flex-direction: column;
+        width: 50%;
+        height: 100%;
+    }
+
+    .home-1 {
+        flex: 85;
+        width: 100%;
+        border-right: 1px solid #ccc;
+        overflow: hidden;
+        border-bottom: 1px solid #ccc;
+
+    }
+
+    .home-1 img {
+        max-width: 100%;
+        max-height: 100%;
+        height: auto;
+        width: auto;
+    }
+
+
+    .home-2 {
+        display: flex;
+        flex-direction: row;
+        justify-content: flex-start;
+        flex-wrap: nowrap;
+        flex: 15;
+        width: 100%;
+        margin-left: 15px;
+    }
+
+    .home-2 a img {
+        width: 65%;
+        /* 图片宽度为其原始大小的90% */
+        height: 50%;
+        /* 高度自动调整以保持宽高比 */
+        margin: 18px 0 0 15px;
+    }
+
+    .right-home {
+        display: flex;
+        flex-direction: column;
+        width: 50%;
+        height: 100%;
+    }
+
+    .home-3 {
+        flex: 85;
+        width: 100%;
+        border-bottom: 1px solid #ccc;
+        display: flex;
+        flex-direction: column;
+        overflow: hidden;
+        /* 设置为列布局 */
+    }
+
+    .home-3 .head-icon {
+        height: 20%;
+        width: 100%;
+        display: flex;
+        flex-direction: row;
+        justify-content: space-around;
+    }
+
+    .home-3 .head-icon .zh {
+        font-size: 18px;
+        margin-left: 15px;
+        color: black;
+        position: relative;
+        transform: translate(0, 25px);
+        font-weight: 700;
+    }
+
+    .home-3 .head-icon .zh.active::after {
+        visibility: visible;
+        content: '';
+        position: absolute;
+        left: 0;
+        bottom: 35px;
+        width: 100%;
+        border-bottom: 2px solid blue;
+    }
+
+    .home-3 .head-icon .dx {
+        font-size: 18px;
+        margin-right: 100px;
+        color: rgb(185, 185, 185);
+        transform: translate(0, 25px);
+        font-weight: 700;
+    }
+
+    .home-3 .head-icon .dx.active::after {
+        visibility: visible;
+        content: '';
+        position: absolute;
+        left: 0;
+        bottom: 35px;
+        width: 100%;
+        border-bottom: 2px solid blue;
+    }
+
+    .home-3 .head-icon img {
+        transform: translate(0, 18px);
+        width: 95%;
+        height: 30%;
+    }
+
+    .home-3 .head-icon .close:hover {
+        cursor: pointer;
+    }
+
+    .home-3 .head-icon .zh:hover {
+        cursor: pointer;
+    }
+
+    .home-3 .head-icon .dx:hover {
+        cursor: pointer;
+    }
+
+    /* 登录框 */
+    /* 登录框 */
+    /* 登录和注册输入框内的字体大小 */
+    .loginUp input[type="text"],
+    .loginUp input[type="password"],
+    .signUp input[type="text"],
+    .signUp input[type="password"] {
+        font-size: 16px;
+        /* 设置字体大小为14像素，您可以根据需要调整大小 */
+    }
+
+    .home-3 .loginUp {
+        display: block;
+        max-height: 25%;
+        width: 100%;
+        list-style-type: none;
+        margin: 0 0 0 0;
+    }
+
+    .loginUp li {
+        margin-bottom: -5px;
+    }
+
+    .loginUp label {
+        display: inline-block;
+        width: 100px;
+    }
+
+    .home-3 .loginUp input[type="text"],
+    .home-3 .loginUp input[type="password"] {
+        outline: none;
+        /* 移除默认的聚焦边框 */
+        border: 1px solid #ccc;
+        border-radius: 8px;
+        padding: 15px;
+        width: 304px;
+    }
+
+    /* 注册框 */
+    .home-3 .signUp {
+        display: none;
+        max-height: 25%;
+        width: 100%;
+        list-style-type: none;
+        padding: 0;
+        margin: 0 0 0 0;
+        /* 上方留出10px的距离，其余方向为0 */
+    }
+
+    .signUp .signText {
+        position: absolute;
+        display: flex;
+        font-size: 12px;
+        flex-direction: row;
+        flex-wrap: nowrap;
+        color: #858585;
+        margin-left: 35px;
+        align-items: center;
+    }
+
+    .signUp li {
+        margin-bottom: -5px;
+        /* 减少li元素之间的间距为5px */
+    }
+
+    .signUp label {
+        display: inline-block;
+        width: 80px;
+    }
+
+    .home-3 .signUp input[type="text"],
+    .home-3 .signUp input[type="password"] {
+        outline: none;
+        /* 移除默认的聚焦边框 */
+        border: 1px solid #ccc;
+        border-radius: 8px;
+        padding: 15px;
+        width: 304px;
+    }
+
+    .signUp .sendCode {
+        position: absolute;
+        font-size: 15px;
+        color: #4E6EF2;
+        margin-left: 60px;
+        transform: translateY(-140%);
+    }
+
+    .textSide {
+        visibility: visible;
+        width: 330px;
+        height: 7%;
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        flex-wrap: nowrap;
+        margin: 55px auto 0 auto;
+    }
+
+    .noWord {
+        font-size: 14px;
+        margin-top: 5px;
+        color: red;
+    }
+
+    .noPassWord {
+        display: none;
+    }
+
+    .noUserName {
+        display: none;
+    }
+
+    .noPhone {
+        display: none;
+    }
+
+    .phoneError {
+        display: none;
+    }
+
+    .noCheckWord {
+        display: none;
+    }
+
+
+
+    .forget {
+        transform: translate(0, 8px);
+        visibility: visible;
+        font-size: 14px;
+    }
+
+    .forget a {
+        color: #5675F3;
+    }
+
+    .loginbtn2 {
+        margin-top: 15px;
+        margin-left: 32px;
+        border-radius: 10px;
+        padding: 24px;
+        width: 335px;
+        border: none;
+        /* 或者 border: 0; */
+        max-height: 30%;
+        display: flex;
+        /* 设置为 Flexbox 容器 */
+        align-items: center;
+        /* 垂直居中 */
+        justify-content: center;
+        /* 水平居中 */
+        background-color: #B8C5FA;
+        /* 整个框的背景色为蓝色 */
+        font-size: 15px;
+        /* 字体大小 */
+        color: white;
+        /* 字体颜色为白色 */
+        cursor: pointer;
+        /* 鼠标样式为手型 */
+        transition: background-color 0.3s, color 0.3s;
+        /* 过渡效果 */
+        box-shadow: 0 2px 10px #B8C5FA;
+        /* 添加蓝色阴影 */
+    }
+
+    .loginbtn2:hover {
+        background-color: rgb(165, 178, 237);
+    }
+
+
+
+
+    .checkBox {
+        display: flex;
+        align-items: center;
+        /* 垂直居中对齐 */
+        justify-content: center;
+        margin-top: -3px;
+    }
+
+    .checkBox input[type="checkbox"] {
+        vertical-align: middle;
+        /* 设置垂直对齐方式为中间 */
+        margin-right: 5px;
+        margin-top: 0;
+    }
+
+
+    .checkBox label {
+        font-size: 14px;
+        vertical-align: middle;
+        /* 设置垂直对齐方式为中间 */
+    }
+
+    .checkBox label a {
+        color: #5675F3;
+    }
+
+    .checkBox label:hover {
+        cursor: pointer;
+    }
+
+    .home-4 {
+        flex: 15;
+        width: 100%;
+        height: 10%;
+        display: flex;
+        justify-content: flex-end;
+        /* 图片底部与父元素底部对齐 */
+        align-items: flex-end;
+        /* 图片左侧与父元素左侧对齐 */
+
+    }
+
+    .home-4 a {
+        color: #4E6EF2;
+        font-size: 15px;
+        margin: 0 20px 20px 0;
+    }
+
+
+
+
+    /* 800px-1200px之间的情况 */
+    @media screen and (min-width: 800px) and (max-width: 1200px) {
+        .body {
+            width: 100%;
+        }
+
+
+        /* 右半边AIbtn */
+        .AIbtn {
+            width: 40px;
+            height: 40px;
+            border-radius: 20px;
+            position: absolute;
+            z-index: 50;
+            overflow: hidden;
+            right: 30px;
+            top: 200px;
+        }
+
+        .AIbtn img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            /* 确保图片完全填充父元素 */
+        }
+
+
+        /* 辅助模式 */
+        .modeBlock {
+            width: 100%;
+            height: 100px;
+            background-color: #EEEEEE;
+            /* 设置背景颜色，可根据需求修改 */
+            position: fixed;
+            /* 使用 fixed 定位，让该块固定在页面顶部 */
+            top: 0;
+            /* 距离页面顶部的距离为 0 */
+            left: 0;
+            /* 距离页面左侧的距离为 0 */
+            z-index: 9;
+            /* 设置 z-index 以保证该块在其他元素之上 */
+            display: none;
+        }
+
+        /* 占位符 */
+        .placeholder {
+            width: 100%;
+            height: 100px;
+            /* 与顶部块高度相同 */
+            display: none;
+        }
+
+        /* 辅助模式的父盒子 */
+        .parent {
+            width: auto;
+            display: flex;
+            margin-left: 20px;
+            /* 整体相对于左侧偏移50px */
+            flex-wrap: nowrap;
+            /* 允许子元素换行 */
+            overflow: hidden;
+        }
+
+        /* 辅助模式的子盒子 */
+        .child {
+            width: 55px;
+            height: 80px;
+            box-sizing: border-box;
+            border: 1px solid #EDEDED;
+            /* 边框样式，2px 的实线边框，颜色为黑色，可根据需要调整颜色 */
+            border-radius: 10px;
+            /* 边框弧度，设置为子元素高度的一半 */
+            background-color: #fff;
+            /* 背景颜色，白色 */
+            /* 盒子之间的间距 */
+            margin: 10px 5px 0 2px;
+            overflow: hidden;
+        }
+
+        /* 辅助模式的其中几个盒子需要与前面扩大间距 */
+        .special {
+            padding: 0;
+            margin-left: 15px;
+        }
+
+        .child img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            /* 确保图片完全填充父元素 */
+        }
+
+
+
+
+
+
+        /* 头部导航栏 */
+        /* 左半边 */
+        .left-head ul {
+            display: flex;
+            flex-direction: row;
+            font-size: 0;
+            padding: 5px 20px 0;
+            height: 60px;
+            line-height: 60px;
+        }
+
+        .left-head a {
+            font-size: 12px;
+            line-height: 23px;
+            color: var(--nav-left-head);
+            margin: 20px 20px 0 0;
+        }
+
+        .left-head a:hover {
+            color: var(--nav-left-head-hover);
+        }
+
+        /* 更多，下拉弹框 */
+        .g-more a {
+            color: var(--g_more);
+        }
+
+        .g-more a:hover {
+            color: var(--g_more-hover);
+        }
+
+        .more {
+            visibility: hidden;
+            position: absolute;
+            top: 0;
+            left: 0;
+            margin-top: 50px;
+            margin-left: 250px;
+            box-shadow: 0px 4px 5px 3px rgb(211, 211, 211, 0.4);
+            border-radius: 20px;
+            display: flex;
+            justify-content: flex-start;
+            flex-wrap: wrap;
+            width: 200px;
+            height: 280px;
+            z-index: 888;
+            background-color: white;
+        }
+
+        .more .g-box {
+            width: calc(30% - 1px);
+            /* 20px 是你想要的左右间距的总和 */
+            height: 60px;
+            margin: 3px;
+            /* 通过 margin 来模拟空白间隔 */
+            border-radius: 10px;
+            background-color: white;
+        }
+
+        .more .g-box a {
+            height: 100%;
+            width: 100%;
+        }
+
+        .more .g-box .word {
+            font-size: 10px;
+            text-align: center;
+            color: var(--more-g-box-word);
+        }
+
+        .more .g-box .word:hover {
+            color: blue;
+        }
+
+        .more .g-box img {
+            display: block;
+            margin: 0 auto;
+            border-radius: 10px;
+            width: 40px;
+            height: 40px;
+            border: #BBBBBB solid 0.5px;
+        }
+
+        .g-box-back {
+            width: 200px;
+            height: 30px;
+            margin: 0 auto 0;
+            display: flex;
+            border-radius: 10px;
+            margin: 0 5px 0;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .g-box-back a {
+            display: inline-block;
+            margin: 0 auto;
+            text-align: center;
+            align-items: center;
+            color: var(--g-BoxBack);
+        }
+
+        .g-more:hover~.more {
+            visibility: visible;
+        }
+
+        .more:hover {
+            visibility: visible;
+        }
+
+        .g-box:hover {
+            background-color: rgb(241, 243, 253);
+        }
+
+        .g-box:hover .word {
+            color: blue;
+        }
+
+        .g-box-back a:hover {
+            color: var(--g-BoxBack-hover);
+        }
+
+        .g-box-back:hover {
+            background-color: rgb(241, 243, 253);
+            cursor: pointer;
+        }
+
+        .g-box-back:hover a {
+            color: var(--g-BoxBack-hover);
+            /* 设置链接颜色 */
+        }
+
+
+
+
+        /* 右半边 */
+        .right-head {
+            float: right;
+            height: 60px;
+            line-height: 60px;
+        }
+
+        .menu {
+            position: absolute;
+            right: 55px;
+            width: 60px;
+        }
+
+        .menu .set {
+            font-size: 12px;
+            line-height: 23px;
+            color: var(--nav-right-head);
+            margin: 20px 25px 0 0;
+        }
+
+        .menu .set:hover {
+            color: var(--nav-right-head-hover);
+        }
+
+        .m-menu {
+            font-size: 12px;
+            display: none;
+            width: 80px;
+            position: absolute;
+            background-color: rgb(255, 255, 255);
+            z-index: 1;
+            text-align: center;
+            transform: translateX(-35%);
+            border: 1px solid #BBBBBB;
+            border-radius: 20px;
+            box-shadow:
+                0 0 2px rgba(234, 233, 233, 0.8),
+                1px 0 5px rgba(237, 237, 237, 0.8),
+                0 1px 5px rgba(238, 238, 238, 0.8),
+                -1px 0 5px rgba(212, 212, 212, 0.8);
+        }
+
+        .m-menu li {
+            padding: 2px 0;
+            text-align: center;
+            line-height: 15px;
+        }
+
+        .m-menu .changeSkin {
+            margin-top: 10px;
+        }
+
+        .m-menu .changeSkin::before {
+            content: "";
+            display: block;
+            position: absolute;
+            margin: -5px auto 0;
+            width: 50%;
+            height: 1px;
+            /* 边框粗细 */
+            transform: translateX(50%);
+            /* 通过负的自身宽度的一半来向左移动 */
+            border-top: 1px solid #afafaf;
+            /* 边框样式 */
+        }
+
+        .m-menu li a {
+            color: black;
+        }
+
+        .m-menu li a:hover {
+            color: blue;
+        }
+
+        .menu:hover .m-menu {
+            display: block;
+        }
+
+        /* 右半边-登录按钮 */
+        .right-head .loginbtn {
+            font-size: 12px;
+            line-height: 23px;
+            color: white;
+            margin: 20px 25px 0 0;
+        }
+
+        .right-head .loginbtn {
+            padding: 5px 10px;
+            margin-left: 10px;
+            text-align: center;
+            background-color: #4e6ef2;
+            border-radius: 5px;
+        }
+
+        .right-head .loginbtn:hover {
+            background-color: #4662d0;
+        }
+
+
+        /* 搜索区域 */
+        .c-center {
+            width: 100%;
+            margin: 0 auto;
+            overflow: hidden;
+        }
+
+        .c-center .box {
+            width: 100%;
+        }
+
+        .c-center .logo {
+            width: 250px;
+            margin: 0 auto;
+        }
+
+        .c-center img {
+            width: 100%;
+            margin: 0 auto;
+            height: 120px;
+            transition: width 0.5s ease;
+        }
+
+        /* 搜索框 */
+        form {
+            width: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 10px 0;
+        }
+
+        /* .clearBtn {
+            position: absolute;
+            display: none;
+            max-width: 25px;
+            max-height: 25px;
+            z-index: 80;
+            margin-left: 135px;
+            margin-top: 3px;
+        }
+
+        .clearBtn img {
+            width: 100%;
+            height: 100%;
+        }
+
+        .clearBtn:hover {
+            cursor: pointer;
+        } */
+
+        /* 输入框样式 */
+        .input1 {
+            position: relative;
+        }
+
+        .input1 input {
+            outline: none;
+            width: 350px;
+            height: 40px;
+            border: 2px solid #C4C7CE;
+            border-right: transparent;
+            border-radius: 10px 0 0 10px;
+            transition: width 1s ease;
+            text-indent: 13px;
+            /* 设置文本缩进 */
+        }
+
+        .input1 input:hover {
+            border-color: #A7AAB5;
+        }
+
+        .input1.clicked input {
+            outline: none;
+            border: 2px solid #4E6EF2;
+            border-right: none;
+            border-radius: 10px 0 0 0;
+            border-bottom: none;
+            padding-bottom: 2px;
+        }
+
+
+        .input1.two-clicked input {
+            outline: none;
+            border: 2px solid #4E6EF2;
+            border-right: none;
+            padding: 0;
+            border-radius: 10px 0 0 10px;
+        }
+
+        /* 上传图片图标样式 */
+        .input1 .img-1 img {
+            max-width: 26px;
+            max-height: 26px;
+            object-fit: contain;
+            /* 或者 object-fit: cover; */
+            position: absolute;
+            right: 9%;
+            top: 50%;
+            transform: translateY(-50%);
+            /* 垂直居中 */
+        }
+
+        .input1 .img-2 img {
+            max-width: 25px;
+            max-height: 25px;
+            object-fit: contain;
+            /* 或者 object-fit: cover; */
+            position: absolute;
+            right: 2%;
+            top: 50%;
+            transform: translateY(-50%);
+            /* 垂直居中 */
+        }
+
+        .input1 img:hover {
+            cursor: pointer;
+        }
+
+        /* 提交样式 */
+        .input2 {
+            cursor: pointer;
+            height: 44px;
+            width: 75px;
+            color: white;
+            background-color: #4E6EF2;
+            border: 2px solid #4E6EF2;
+            border-radius: 0 10px 10px 0;
+            transition: width 1s ease;
+            font-size: 13px;
+            z-index: 1;
+        }
+
+        .input2:hover {
+            background-color: #4662D9;
+            border-color: #4662D9;
+        }
+
+
+
+        /* 搜索记录 */
+        .historyBox {
+            width: 100%;
+            position: absolute;
+            display: flex;
+            justify-content: center;
+            margin-top: 178px;
+            justify-content: space-around;
+            flex-direction: row;
+            flex-wrap: nowrap;
+            z-index: 9;
+        }
+
+        .search-history {
+            position: absolute;
+            width: 350px;
+            border-radius: 0 0 10px 10px;
+            margin-right: 73px;
+            height: auto;
+            max-height: 320px;
+            background-color: #ffffff;
+            border: 2px solid #4E6EF2;
+            border-top: none;
+            /* 移除原本的上边框 */
+            padding-top: 2px;
+            display: none;
+            z-index: 10;
+            overflow: auto;
+        }
+
+        .search-history::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 50%;
+            /* 将左边框移动到父元素的中间位置 */
+            width: 95%;
+            /* 上边框长度 */
+            height: 2px;
+            /* 上边框粗细 */
+            background-color: #F2F2F2;
+            /* 上边框颜色 */
+            transform: translateX(-50%);
+            /* 使用transform属性将边框居中 */
+        }
+
+        .search-history .searchList {
+            line-height: 30px;
+            font-size: 13px;
+            width: 100%;
+            padding: 10px 0;
+            text-indent: 15px;
+            /* 设置文本缩进 */
+        }
+
+        .search-history .searchList li:hover {
+            color: #2144d1;
+            background-color: #e9e9e9;
+            cursor: pointer;
+        }
+
+
+        /* 删除按钮图标样式 */
+        .delete-icon {
+            display: none;
+            /* 默认隐藏 */
+            cursor: pointer;
+            float: right;
+            margin-right: 20px;
+            color: #9195A3;
+        }
+
+        .delete-icon:hover {
+            color: #2144d1;
+        }
+
+        /* 显示删除图标 */
+        li:hover .delete-icon {
+            display: inline-block;
+        }
+
+
+
+
+
+
+
+        /* 热搜的两个按钮 */
+        .key {
+            padding-top: 20px;
+            width: 425px;
+            /* 调整宽度以便按钮能够分散在两边 */
+            margin: 0 auto;
+            display: flex;
+            height: auto;
+            justify-content: space-between;
+            flex-direction: row;
+            flex-wrap: nowrap;
+            margin-top: 15px;
+        }
+
+        .key .baidu-hot-search {
+            width: auto;
+            height: auto;
+            display: flex;
+            flex-direction: row;
+            flex-wrap: nowrap;
+
+        }
+
+        .key .baidu-hot-search a {
+            color: var(--center-hotSearch);
+            font-weight: bolder;
+            font-size: 13px;
+        }
+
+        .key .baidu-hot-search .hockIcon {
+            transform: translate(0, -1px);
+            height: 12px;
+            width: 16px;
+        }
+
+        .hockIcon img {
+            width: 100%;
+            height: 100%;
+        }
+
+        .key .h-icon a img {
+            max-width: 20px;
+            max-height: 20px;
+            object-fit: contain;
+            margin: -1px 2px 1px 1px;
+            vertical-align: middle;
+            /* 垂直居中对齐 */
+            transition: transform 0.3s ease;
+            /* 添加过渡效果 */
+        }
+
+        .key .h-icon a {
+            color: #626675;
+            font-weight: normal;
+            font-size: 12px;
+        }
+
+        .key .h-icon a:hover {
+            cursor: pointer;
+        }
+
+        .key a:hover {
+            color: #00e;
+            cursor: pointer;
+        }
+
+
+
+        /* 热搜榜 */
+        .list {
+            width: 100%;
+            /* 设置为100%宽度 */
+            max-width: 425px;
+            /* 最大宽度为1000px */
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 20px;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .middle-context {
+            list-style: none;
+            padding: 0;
+        }
+
+        .middle-context li {
+            height: 30px;
+            line-height: 30px;
+            font-size: 12px;
+            color: #9195a3;
+            padding-top: 5px;
+        }
+
+        .top img {
+            max-width: 100%;
+            height: auto;
+        }
+
+        .c-center ul li a {
+            color: var(--center-list);
+            font-size: 12px;
+            padding-left: 10px;
+        }
+
+
+
+
+        .c-center ul li a:hover {
+            color: var(--center-list-hover);
+            text-decoration: underline;
+        }
+
+        .custom-link {
+            color: var(--center-list);
+        }
+
+        .custom-link:hover {
+            color: var(--center-list-hover);
+        }
+
+        .one {
+            color: #fe2d46 !important;
+            display: inline-block;
+            vertical-align: middle;
+            line-height: 30px;
+            margin: 0;
+        }
+
+        .two {
+            color: #f60 !important;
+        }
+
+        .three {
+            color: #faa90e !important;
+        }
+
+        .new,
+        .hot {
+            border-radius: 5px;
+            font-size: 9px;
+            color: #fff;
+            text-align: center;
+            line-height: 30px;
+            margin-left: 5px;
+            padding: 1px 3px;
+            vertical-align: top;
+        }
+
+        .new {
+            background-color: rgb(250, 75, 75);
+        }
+
+        .hot {
+            background-color: #f60;
+        }
+
+
+
+
+
+
+
+        /* 页面右下侧图标样式 */
+        .right-icon {
+            display: flex;
+            flex-direction: column;
+            position: absolute;
+            bottom: 65px;
+            height: 85px;
+            right: 0;
+            justify-content: flex-start;
+            align-items: center;
+            width: 95px;
+        }
+
+
+
+        .icon-text {
+            position: fixed;
+            visibility: hidden;
+            bottom: 113px;
+            right: 80px;
+            /* 使用 visibility 属性隐藏元素 */
+            font-size: 13px;
+            width: 90px;
+            box-sizing: border-box;
+            height: 30px;
+            text-align: center;
+            color: var(--bottom-icon-text);
+            /* 水平居中 */
+            line-height: 30px;
+            /* 和盒子高度相等的值 */
+            border-radius: 5px;
+            box-shadow:
+                0 0 10px rgba(159, 159, 159, 0.3),
+                /* 增加模糊半径并降低透明度 */
+                1px 0 10px rgba(159, 159, 159, 0.3),
+                0 1px 10px rgba(159, 159, 159, 0.3),
+                -1px 0 10px rgba(80, 80, 80, 0.3);
+            /* 降低边框阴影的颜色透明度 */
+        }
+
+
+        .icon-blog {
+            display: none;
+            position: absolute;
+            text-align: center;
+            align-items: center;
+            width: 250px;
+            height: 100px;
+            border-radius: 20px;
+            background-color: white;
+            box-shadow:
+                0 0 8px rgba(240, 240, 240, 0.7),
+                /* 更浅的灰色阴影 */
+                2px 0 8px rgba(240, 240, 240, 0.7),
+                0 2px 8px rgba(240, 240, 240, 0.7),
+                -2px 0 8px rgba(240, 240, 240, 0.7);
+            right: 80px;
+            overflow: hidden;
+            bottom: 65px;
+        }
+
+        .icon-blog img {
+            width: 90%;
+            height: 90%;
+            object-fit: cover;
+            /* 确保图片完全填充父元素 */
+        }
+
+
+
+        .iconBox {
+            width: 40px;
+            height: 85px;
+            /* background-color: #4662d0; */
+            border-radius: 30px;
+            background-color: white;
+        }
+
+
+        .right-icon1 {
+            max-width: 40px;
+            max-height: 40px;
+            margin-bottom: 5px;
+            border-radius: 30px;
+            overflow: hidden;
+            background-color: white;
+        }
+
+        .right-icon1 img {
+            width: 100%;
+            height: 100%;
+        }
+
+        .right-icon2 {
+            max-width: 40px;
+            max-height: 40px;
+            right: 0;
+            bottom: 15%;
+            border-radius: 30px;
+            overflow: hidden;
+        }
+
+        .right-icon2 img {
+            width: 100%;
+            height: 100%;
+        }
+
+        .right-icon1:hover {
+            box-shadow: 0 3px 5px rgba(67, 67, 67, 0.5);
+            /* 设置阴影效果 */
+            cursor: pointer;
+        }
+
+        .right-icon2:hover {
+            box-shadow: 0 3px 5px rgba(67, 67, 67, 0.5);
+            /* 设置阴影效果 */
+            cursor: pointer;
+        }
+
+
+
+        /* 尾部 */
+        footer {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+        }
+
+        .c-foot {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-wrap: wrap;
+            /* 如果内容过多，允许换行 */
+            list-style-type: none;
+            margin: 0;
+            bottom: 0;
+        }
+
+        .c-foot li {
+            padding: 0 6px;
+        }
+
+        .c-foot a {
+            text-decoration: none;
+            color: #b5b4b4;
+            display: inline-block;
+            padding: 6px 0;
+            /* 设置链接的内边距 */
+            font-size: 12px;
+        }
+
+        .c-foot .colorChange a {
+            color: var(--footer-colorChange);
+        }
+
+        .c-foot .colorChange a:hover {
+            color: var(--footer-colorChange-hover);
+        }
+
+        .c-foot .footImage2 a img,
+        .c-foot .footImage1 a img {
+            max-width: 28px;
+            max-height: 28px;
+        }
+
+        .c-foot .footImage2 a img {
+            margin-left: -10px;
+            margin-bottom: -5px;
+        }
+    }
+
+
+
+    /* 0-800px之间的情况 */
+    @media screen and (max-width: 800px) {
+        .body {
+            width: 100%;
+        }
+
+
+        /* 右半边AIbtn */
+        .AIbtn {
+            width: 40px;
+            height: 40px;
+            border-radius: 20px;
+            position: absolute;
+            z-index: 50;
+            overflow: hidden;
+            right: 30px;
+            top: 200px;
+        }
+
+        .AIbtn img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            /* 确保图片完全填充父元素 */
+        }
+
+
+        /* 辅助模式 */
+        .modeBlock {
+            width: 100%;
+            height: 90px;
+            background-color: #EEEEEE;
+            /* 设置背景颜色，可根据需求修改 */
+            position: fixed;
+            /* 使用 fixed 定位，让该块固定在页面顶部 */
+            top: 0;
+            /* 距离页面顶部的距离为 0 */
+            left: 0;
+            /* 距离页面左侧的距离为 0 */
+            z-index: 9;
+            /* 设置 z-index 以保证该块在其他元素之上 */
+            display: none;
+        }
+
+        /* 占位符 */
+        .placeholder {
+            width: 100%;
+            height: 90px;
+            /* 与顶部块高度相同 */
+            display: none;
+        }
+
+        /* 辅助模式的父盒子 */
+        .parent {
+            width: auto;
+            display: flex;
+            margin-left: 5px;
+            flex-wrap: nowrap;
+            /* 允许子元素换行 */
+            overflow: hidden;
+        }
+
+        /* 辅助模式的子盒子 */
+        .child {
+            width: 40px;
+            height: 65px;
+            box-sizing: border-box;
+            border: 1px solid #EDEDED;
+            /* 边框样式，2px 的实线边框，颜色为黑色，可根据需要调整颜色 */
+            border-radius: 10px;
+            /* 边框弧度，设置为子元素高度的一半 */
+            background-color: #fff;
+            /* 背景颜色，白色 */
+            /* 盒子之间的间距 */
+            margin: 15px 2px 0 2px;
+            overflow: hidden;
+        }
+
+        /* 辅助模式的其中几个盒子需要与前面扩大间距 */
+        .special {
+            padding: 0;
+            margin-left: 5px;
+        }
+
+        .child img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            /* 确保图片完全填充父元素 */
+        }
+
+
+        /* 头部导航栏 */
+        /* 左半边区域 */
+        .left-head ul {
+            display: flex;
+            flex-direction: row;
+            padding: 0 24px 0;
+            flex-wrap: nowrap;
+            height: 60px;
+            line-height: 60px;
+            overflow: hidden;
+        }
+
+        .left-head a {
+            font-size: 10px;
+            line-height: 23px;
+            color: var(--nav-left-head);
+            margin: 20px 15px 0 0;
+        }
+
+        .left-head a:hover {
+            color: var(--nav-left-head-hover);
+        }
+
+        /* 更多，下拉弹框 */
+        .g-more a {
+            color: var(--g_more);
+        }
+
+        .g-more a:hover {
+            color: var(--g_more-hover);
+        }
+
+        .more {
+            visibility: hidden;
+            position: absolute;
+            top: 0;
+            left: 0;
+            margin-top: 50px;
+            margin-left: 230px;
+            box-shadow: 0px 4px 5px 3px rgb(211, 211, 211, 0.4);
+            border-radius: 20px;
+            display: flex;
+            justify-content: flex-start;
+            flex-wrap: wrap;
+            width: 180px;
+            height: 260px;
+            z-index: 888;
+            background-color: white;
+        }
+
+        .more .g-box {
+            width: calc(30% - 1px);
+            /* 20px 是你想要的左右间距的总和 */
+            height: 60px;
+            margin: 3px;
+            /* 通过 margin 来模拟空白间隔 */
+            border-radius: 10px;
+            background-color: white;
+        }
+
+        .more .g-box .word {
+            font-size: 8px;
+            text-align: center;
+        }
+
+        .more .g-box a {
+            height: 100%;
+            width: 100%;
+        }
+
+        .more .g-box img {
+            display: block;
+            margin: 0 auto;
+            margin-top: 5px;
+            border-radius: 10px;
+            width: 35px;
+            height: 30px;
+            border: #BBBBBB solid 0.5px;
+        }
+
+        .g-box-back {
+            width: 200px;
+            height: 30px;
+            margin: 0 auto 0;
+            border-radius: 10px;
+            align-items: center;
+            margin: 0 5px 0;
+            display: flex;
+            justify-content: center;
+        }
+
+        .g-box-back a {
+            display: inline-block;
+            margin: 0 auto;
+            text-align: center;
+            align-items: center;
+            color: var(--g-BoxBack);
+        }
+
+        .g-more:hover~.more {
+            visibility: visible;
+        }
+
+        .more:hover {
+            visibility: visible;
+        }
+
+        .g-box:hover {
+            background-color: rgb(241, 243, 253);
+        }
+
+        .g-box:hover .word {
+            color: blue;
+        }
+
+        .g-box-back a:hover {
+            color: var(--g-BoxBack-hover);
+        }
+
+        .g-box-back:hover {
+            background-color: rgb(241, 243, 253);
+            cursor: pointer;
+        }
+
+        .g-box-back:hover a {
+            color: var(--g-BoxBack-hover);
+            /* 设置链接颜色 */
+        }
+
+
+
+
+        /* 右半边 */
+        .right-head {
+            float: right;
+            height: 60px;
+            line-height: 60px;
+        }
+
+        .menu {
+            position: absolute;
+            right: 50px;
+            width: 60px;
+        }
+
+        .menu .set {
+            font-size: 10px;
+            line-height: 23px;
+            color: var(--nav-right-head);
+            margin: 20px 25px 0 0;
+        }
+
+        .menu .set:hover {
+            color: var(--nav-right-head-hover);
+        }
+
+        .m-menu {
+            font-size: 9px;
+            display: none;
+            width: 60px;
+            position: absolute;
+            background-color: rgb(255, 255, 255);
+            z-index: 90;
+            text-align: center;
+            transform: translateX(-35%);
+            border: 1px solid #dbdbdb;
+            border-radius: 2px;
+            box-shadow:
+                0 0 2px rgba(255, 255, 255, 0.8),
+                1px 0 5px rgba(243, 243, 243, 0.8),
+                0 1px 5px rgba(238, 238, 238, 0.8),
+                -1px 0 5px rgba(232, 232, 232, 0.8);
+        }
+
+        .m-menu li {
+            padding: 2px 0;
+            text-align: center;
+            line-height: 10px;
+        }
+
+        .m-menu .changeSkin {
+            margin-top: 10px;
+        }
+
+        .m-menu .changeSkin::before {
+            content: "";
+            display: block;
+            position: absolute;
+            margin: -6px auto 0;
+            width: 50%;
+            height: 1px;
+            /* 边框粗细 */
+            transform: translateX(50%);
+            /* 通过负的自身宽度的一半来向左移动 */
+            border-top: 1px solid #afafaf;
+            /* 边框样式 */
+        }
+
+
+        .m-menu li a {
+            color: black;
+        }
+
+        .m-menu li a:hover {
+            color: blue;
+        }
+
+        .menu:hover .m-menu {
+            display: block;
+        }
+
+        /* 右半边-登录按钮 */
+        .right-head .loginbtn {
+            font-size: 10px;
+            line-height: 23px;
+            color: white;
+            margin: 20px 25px 0 0;
+        }
+
+        .right-head .loginbtn {
+            padding: 5px 10px;
+            margin-left: 10px;
+            text-align: center;
+            background-color: #4e6ef2;
+            border-radius: 5px;
+        }
+
+        .right-head .loginbtn:hover {
+            background-color: #4662d0;
+        }
+
+
+        /* 搜索区域 */
+        .c-center {
+            width: 100%;
+            margin: 0 auto;
+            overflow: hidden;
+        }
+
+        .c-center .box {
+            width: 100%;
+        }
+
+        .c-center .logo {
+            width: 200px;
+            margin: 0 auto;
+        }
+
+        .c-center img {
+            width: 100%;
+            height: 105px;
+            transition: width 0.5s ease;
+        }
+
+        /* 搜索框 */
+        form {
+            width: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 10px 0;
+        }
+
+        /* .clearBtn {
+            position: absolute;
+            display: none;
+            max-width: 20px;
+            max-height: 20px;
+            z-index: 80;
+            margin-left: 32px;
+            margin-top: 3px;
+        }
+
+        .clearBtn img {
+            width: 100%;
+            height: 100%;
+        }
+
+        .clearBtn:hover {
+            cursor: pointer;
+        } */
+
+        /* 输入框样式 */
+        .input1 {
+            position: relative;
+        }
+
+        .input1 input {
+            outline: none;
+            width: 200px;
+            height: 40px;
+            border: 2px solid #C4C7CE;
+            border-right: transparent;
+            border-radius: 10px 0 0 10px;
+            transition: width 1s ease;
+            text-indent: 10px;
+            /* 设置文本缩进 */
+        }
+
+        .input1 input:hover {
+            border-color: #A7AAB5;
+        }
+
+        .input1.clicked input {
+            outline: none;
+            border: 2px solid #4E6EF2;
+            border-right: none;
+            border-radius: 10px 0 0 0;
+            border-bottom: none;
+            padding-bottom: 2px;
+        }
+
+
+        .input1.two-clicked input {
+            outline: none;
+            border: 2px solid #4E6EF2;
+            border-right: none;
+            padding: 0;
+            border-radius: 10px 0 0 10px;
+        }
+
+        /* 上传图片图标样式 */
+        .input1 .img-1 img {
+            max-width: 21px;
+            max-height: 21px;
+            object-fit: contain;
+            /* 或者 object-fit: cover; */
+            position: absolute;
+            right: 11%;
+            top: 50%;
+            transform: translateY(-50%);
+            /* 垂直居中 */
+        }
+
+        .input1 .img-2 img {
+            max-width: 20px;
+            max-height: 20px;
+            object-fit: contain;
+            /* 或者 object-fit: cover; */
+            position: absolute;
+            right: 2%;
+            top: 50%;
+            transform: translateY(-50%);
+            /* 垂直居中 */
+        }
+
+        .input1 img:hover {
+            cursor: pointer;
+        }
+
+        /* 提交样式 */
+        .input2 {
+            cursor: pointer;
+            height: 44px;
+            width: 60px;
+            color: white;
+            background-color: #4E6EF2;
+            border: 2px solid #4E6EF2;
+            border-radius: 0 10px 10px 0;
+            font-size: 11px;
+            z-index: 1;
+            transition: width 1s ease;
+        }
+
+        .input2:hover {
+            background-color: #4662D9;
+            border-color: #4662D9;
+        }
+
+        /* 搜索记录 */
+        .historyBox {
+            width: 100%;
+            position: absolute;
+            display: flex;
+            justify-content: center;
+            margin-top: 163px;
+            justify-content: space-around;
+            flex-direction: row;
+            flex-wrap: nowrap;
+            z-index: 9;
+        }
+
+        .search-history {
+            position: absolute;
+            width: 200px;
+            border-radius: 0 0 10px 10px;
+            margin-right: 58px;
+            height: auto;
+            max-height: 320px;
+            background-color: #ffffff;
+            border: 2px solid #4E6EF2;
+            border-top: none;
+            /* 移除原本的上边框 */
+            padding-top: 2px;
+            display: none;
+            z-index: 10;
+            overflow: auto;
+        }
+
+        .search-history::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 50%;
+            /* 将左边框移动到父元素的中间位置 */
+            width: 95%;
+            /* 上边框长度 */
+            height: 2px;
+            /* 上边框粗细 */
+            background-color: #F2F2F2;
+            /* 上边框颜色 */
+            transform: translateX(-50%);
+            /* 使用transform属性将边框居中 */
+        }
+
+        .search-history .searchList {
+            line-height: 30px;
+            font-size: 13px;
+            width: 100%;
+            padding: 10px 0;
+            text-indent: 15px;
+            /* 设置文本缩进 */
+        }
+
+        .search-history .searchList li:hover {
+            color: #2144d1;
+            background-color: #e9e9e9;
+            cursor: pointer;
+        }
+
+
+        /* 删除按钮图标样式 */
+        .delete-icon {
+            display: none;
+            /* 默认隐藏 */
+            cursor: pointer;
+            float: right;
+            margin-right: 20px;
+            color: #9195A3;
+        }
+
+        .delete-icon:hover {
+            color: #2144d1;
+        }
+
+        /* 显示删除图标 */
+        li:hover .delete-icon {
+            display: inline-block;
+        }
+
+
+
+
+        /* 热搜的两个按钮 */
+        .key {
+            padding-top: 20px;
+            width: 260px;
+            /* 调整宽度以便按钮能够分散在两边 */
+            margin: 0 auto;
+            display: flex;
+            height: auto;
+            justify-content: space-between;
+            flex-direction: row;
+            flex-wrap: nowrap;
+            margin-top: 15px;
+        }
+
+        .key .baidu-hot-search {
+            width: auto;
+            height: auto;
+            display: flex;
+            flex-direction: row;
+            flex-wrap: nowrap;
+
+        }
+
+        .key .baidu-hot-search a {
+            color: var(--center-hotSearch);
+            font-weight: bolder;
+            font-size: 11px;
+        }
+
+        .key .baidu-hot-search .hockIcon {
+            transform: translate(0, -4px);
+            height: 10px;
+            width: 14px;
+        }
+
+        .hockIcon img {
+            width: 100%;
+            height: 100%;
+        }
+
+        .key .h-icon a img {
+            max-width: 20px;
+            max-height: 20px;
+            object-fit: contain;
+            margin: -1px 2px 1px 1px;
+            vertical-align: middle;
+            /* 垂直居中对齐 */
+            transition: transform 0.3s ease;
+            /* 添加过渡效果 */
+        }
+
+        .key .h-icon a {
+            color: #626675;
+            font-weight: normal;
+            font-size: 10px;
+        }
+
+        .key .h-icon a:hover {
+            cursor: pointer;
+        }
+
+        .key a:hover {
+            color: #00e;
+            cursor: pointer;
+        }
+
+
+
+        /* 热搜榜 */
+        .list {
+            width: 100%;
+            /* 设置为100%宽度 */
+            max-width: 260px;
+            /* 最大宽度为1000px */
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(1, 1fr);
+            gap: 10px;
+        }
+
+
+        .middle-context {
+            list-style: none;
+            padding: 0;
+        }
+
+        .middle-context li {
+            height: 30px;
+            line-height: 30px;
+            font-size: 11px;
+            color: #9195a3;
+            padding-top: 5px;
+        }
+
+        .top img {
+            max-width: 100%;
+            height: auto;
+        }
+
+        .c-center ul li a {
+            color: var(--center-list);
+            font-size: 11px;
+            padding-left: 10px;
+        }
+
+        .c-center ul li a:hover {
+            color: var(--center-list-hover);
+            text-decoration: underline;
+        }
+
+        .custom-link {
+            color: var(--center-list);
+        }
+
+        .custom-link:hover {
+            color: var(--center-list-hover);
+        }
+
+        .one {
+            color: #fe2d46 !important;
+            display: inline-block;
+            vertical-align: middle;
+            line-height: 30px;
+            margin: 0;
+        }
+
+        .two {
+            color: #f60 !important;
+        }
+
+        .three {
+            color: #faa90e !important;
+        }
+
+        .new,
+        .hot {
+            border-radius: 5px;
+            font-size: 8px;
+            color: #fff;
+            text-align: center;
+            line-height: 30px;
+            margin-left: 7px;
+            padding: 1px 3px;
+            vertical-align: top;
+        }
+
+        .new {
+            background-color: rgb(250, 75, 75);
+        }
+
+        .hot {
+            background-color: #f60;
+        }
+
+
+
+        /* 页面右下侧图标样式 */
+        .right-icon {
+            display: flex;
+            flex-direction: column;
+            position: absolute;
+            bottom: 65px;
+            height: 85px;
+            right: 0;
+            justify-content: flex-start;
+            align-items: center;
+            width: 95px;
+        }
+
+
+
+        .icon-text {
+            position: fixed;
+            visibility: hidden;
+            bottom: 113px;
+            right: 80px;
+            /* 使用 visibility 属性隐藏元素 */
+            font-size: 13px;
+            width: 90px;
+            box-sizing: border-box;
+            height: 30px;
+            text-align: center;
+            color: var(--bottom-icon-text);
+            /* 水平居中 */
+            line-height: 30px;
+            /* 和盒子高度相等的值 */
+            border-radius: 5px;
+            box-shadow:
+                0 0 10px rgba(159, 159, 159, 0.3),
+                /* 增加模糊半径并降低透明度 */
+                1px 0 10px rgba(159, 159, 159, 0.3),
+                0 1px 10px rgba(159, 159, 159, 0.3),
+                -1px 0 10px rgba(80, 80, 80, 0.3);
+            /* 降低边框阴影的颜色透明度 */
+        }
+
+
+        .icon-blog {
+            display: none;
+            position: absolute;
+            text-align: center;
+            align-items: center;
+            width: 250px;
+            height: 100px;
+            border-radius: 20px;
+            background-color: white;
+            box-shadow:
+                0 0 8px rgba(240, 240, 240, 0.7),
+                /* 更浅的灰色阴影 */
+                2px 0 8px rgba(240, 240, 240, 0.7),
+                0 2px 8px rgba(240, 240, 240, 0.7),
+                -2px 0 8px rgba(240, 240, 240, 0.7);
+            right: 80px;
+            overflow: hidden;
+            bottom: 65px;
+        }
+
+
+        .icon-blog img {
+            width: 90%;
+            height: 90%;
+            object-fit: cover;
+            /* 确保图片完全填充父元素 */
+        }
+
+
+
+        .iconBox {
+            width: 40px;
+            height: 85px;
+            /* background-color: #4662d0; */
+            border-radius: 30px;
+            background-color: white;
+        }
+
+
+        .right-icon1 {
+            max-width: 40px;
+            max-height: 40px;
+            margin-bottom: 5px;
+            border-radius: 30px;
+            overflow: hidden;
+            background-color: white;
+        }
+
+        .right-icon1 img {
+            width: 100%;
+            height: 100%;
+        }
+
+        .right-icon2 {
+            max-width: 40px;
+            max-height: 40px;
+            right: 0;
+            bottom: 15%;
+            border-radius: 30px;
+            overflow: hidden;
+        }
+
+        .right-icon2 img {
+            width: 100%;
+            height: 100%;
+        }
+
+        .right-icon1:hover {
+            box-shadow: 0 3px 5px rgba(67, 67, 67, 0.5);
+            /* 设置阴影效果 */
+            cursor: pointer;
+        }
+
+        .right-icon2:hover {
+            box-shadow: 0 3px 5px rgba(67, 67, 67, 0.5);
+            /* 设置阴影效果 */
+            cursor: pointer;
+        }
+
+
+
+        /* 尾部 */
+        /* 尾部 */
+        footer {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+        }
+
+        .c-foot {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-wrap: wrap;
+            /* 如果内容过多，允许换行 */
+            list-style-type: none;
+            margin: 0;
+            bottom: 0;
+        }
+
+        .c-foot li {
+            padding: 0 6px;
+        }
+
+        .c-foot a {
+            text-decoration: none;
+            color: #b5b4b4;
+            display: inline-block;
+            padding: 6px 0;
+            /* 设置链接的内边距 */
+            font-size: 12px;
+        }
+
+        .c-foot .colorChange a {
+            color: var(--footer-colorChange);
+        }
+
+        .c-foot .colorChange a:hover {
+            color: var(--footer-colorChange-hover);
+        }
+
+        .c-foot .footImage2 a img,
+        .c-foot .footImage1 a img {
+            max-width: 28px;
+            max-height: 28px;
+        }
+
+        .c-foot .footImage2 a img {
+            margin-left: -10px;
+            margin-bottom: -5px;
+        }
+    }
+
+    @media screen and (max-width: 500px) {
+
+        /* 右半边AIbtn */
+        .AIbtn {
+            width: 30px;
+            height: 30px;
+            border-radius: 20px;
+            position: absolute;
+            z-index: 50;
+            overflow: hidden;
+            right: 30px;
+            top: 180px;
+        }
+
+        .AIbtn img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            /* 确保图片完全填充父元素 */
+        }
+
+        /* 左半边区域 */
+        .left-head ul {
+            display: flex;
+            flex-direction: row;
+            padding: 0 10px 0;
+            flex-wrap: nowrap;
+            height: 60px;
+            line-height: 60px;
+            overflow: hidden;
+        }
+
+        .left-head a {
+            font-size: 9px;
+            line-height: 23px;
+            color: var(--nav-left-head);
+            margin: 20px 7px 0 0;
+        }
+
+        .left-head a:hover {
+            color: var(--nav-left-head-hover);
+        }
+
+        /* 更多，下拉弹框 */
+        .g-more a {
+            color: var(--g_more);
+        }
+
+        .g-more a:hover {
+            color: var(--g_more-hover);
+        }
+
+        .more {
+            visibility: hidden;
+            position: absolute;
+            top: 0;
+            left: 0;
+            margin-top: 50px;
+            margin-left: 150px;
+            box-shadow: 0px 4px 5px 3px rgb(211, 211, 211, 0.4);
+            border-radius: 20px;
+            display: flex;
+            justify-content: flex-start;
+            flex-wrap: wrap;
+            width: 160px;
+            height: 250px;
+            z-index: 888;
+            background-color: white;
+        }
+
+
+
+
+        .g-box-back {
+            width: 160px;
+            height: 20px;
+            margin: 0 auto 0;
+            border-radius: 10px;
+            align-items: center;
+            margin: 0 5px 0;
+            display: flex;
+            justify-content: center;
+        }
+
+        .g-box-back a {
+            display: inline-block;
+            margin: 0 auto;
+            text-align: center;
+            align-items: center;
+            color: var(--g-BoxBack);
+        }
+
+        .g-more:hover~.more {
+            visibility: visible;
+        }
+
+        .more:hover {
+            visibility: visible;
+        }
+
+        .g-box:hover {
+            background-color: rgb(241, 243, 253);
+        }
+
+        .g-box:hover .word {
+            color: blue;
+        }
+
+        .g-box-back a:hover {
+            color: var(--g-BoxBack-hover);
+        }
+
+        .g-box-back:hover {
+            background-color: rgb(241, 243, 253);
+            cursor: pointer;
+        }
+
+        .g-box-back:hover a {
+            color: var(--g-BoxBack-hover);
+            /* 设置链接颜色 */
+        }
+
+
+
+        /* 右半边 */
+        .right-head {
+            float: right;
+            height: 60px;
+            line-height: 60px;
+        }
+
+        .menu {
+            position: absolute;
+            right: 55px;
+            width: 40px;
+        }
+
+        .menu .set {
+            font-size: 8px;
+            line-height: 10px;
+            color: var(--nav-right-head);
+            margin: 20px 0 0 0;
+        }
+
+        .menu .set:hover {
+            color: var(--nav-right-head-hover);
+        }
+
+        .m-menu {
+            font-size: 9px;
+            display: none;
+            width: 60px;
+            position: absolute;
+            background-color: rgb(255, 255, 255);
+            z-index: 1;
+            text-align: center;
+            transform: translateX(-35%);
+            border: 1px solid #dbdbdb;
+            border-radius: 2px;
+            box-shadow:
+                0 0 2px rgba(255, 255, 255, 0.8),
+                1px 0 5px rgba(243, 243, 243, 0.8),
+                0 1px 5px rgba(238, 238, 238, 0.8),
+                -1px 0 5px rgba(232, 232, 232, 0.8);
+        }
+
+        .hotkey .key .h-icon a img {
+            max-width: 20px;
+            max-height: 20px;
+            object-fit: contain;
+            margin: 0 2px 1px 0;
+            vertical-align: middle;
+            /* 垂直居中对齐 */
+            transition: transform 0.3s ease;
+            /* 添加过渡效果 */
+        }
+
+
+        /* 辅助模式 */
+        .modeBlock {
+            width: 100%;
+            height: 80px;
+            background-color: #EEEEEE;
+            /* 设置背景颜色，可根据需求修改 */
+            position: fixed;
+            /* 使用 fixed 定位，让该块固定在页面顶部 */
+            top: 0;
+            /* 距离页面顶部的距离为 0 */
+            left: 0;
+            /* 距离页面左侧的距离为 0 */
+            z-index: 9;
+            /* 设置 z-index 以保证该块在其他元素之上 */
+            display: none;
+        }
+
+        /* 占位符 */
+        .placeholder {
+            width: 100%;
+            height: 80px;
+            /* 与顶部块高度相同 */
+            display: none;
+        }
+
+        /* 辅助模式的父盒子 */
+        .parent {
+            width: auto;
+            display: flex;
+            margin-left: 2px;
+            flex-wrap: nowrap;
+            /* 允许子元素换行 */
+            overflow: hidden;
+        }
+
+        /* 辅助模式的子盒子 */
+        .child {
+            width: 30px;
+            height: 55px;
+            box-sizing: border-box;
+            border: 1px solid #EDEDED;
+            /* 边框样式，2px 的实线边框，颜色为黑色，可根据需要调整颜色 */
+            border-radius: 5px;
+            /* 边框弧度，设置为子元素高度的一半 */
+            background-color: #fff;
+            /* 背景颜色，白色 */
+            /* 盒子之间的间距 */
+            margin: 13px 2px 0 2px;
+            overflow: hidden;
+        }
+
+        /* 辅助模式的其中几个盒子需要与前面扩大间距 */
+        .special {
+            padding: 0;
+            margin-left: 1px;
+        }
+
+        .child img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            /* 确保图片完全填充父元素 */
+        }
+
+
+
+
+        /* 搜索区域 */
+        .c-center {
+            width: 100%;
+            margin: 0 auto;
+            overflow: hidden;
+        }
+
+        .c-center .box {
+            width: 100%;
+        }
+
+        .c-center .logo {
+            width: 200px;
+            margin: 0 auto;
+        }
+
+        .c-center img {
+            width: 100%;
+            height: 105px;
+            transition: width 0.5s ease;
+        }
+
+        /* .clearBtn {
+            position: absolute;
+            display: none;
+            max-width: 19px;
+            max-height: 19px;
+            z-index: 80;
+            margin-left: 32px;
+            margin-top: 2px;
+        }
+
+        .clearBtn img {
+            width: 100%;
+            height: 100%;
+        }
+
+        .clearBtn:hover {
+            cursor: pointer;
+        } */
+
+
+        .input1 input:hover {
+            border-color: #A7AAB5;
+        }
+
+        .input1.clicked input {
+            outline: none;
+            border: 2px solid #4E6EF2;
+            border-right: none;
+            border-radius: 10px 0 0 0;
+            border-bottom: none;
+            padding-bottom: 2px;
+        }
+
+
+        .input1.two-clicked input {
+            outline: none;
+            border: 2px solid #4E6EF2;
+            border-right: none;
+            padding: 0;
+            border-radius: 10px 0 0 10px;
+        }
+
+
+        /* 上传图片图标样式 */
+        .input1 .img-1 img {
+            max-width: 19px;
+            max-height: 19px;
+            object-fit: contain;
+            /* 或者 object-fit: cover; */
+            position: absolute;
+            right: 12%;
+            top: 50%;
+            transform: translateY(-50%);
+            /* 垂直居中 */
+        }
+
+        .input1 .img-2 img {
+            max-width: 18px;
+            max-height: 18px;
+            object-fit: contain;
+            /* 或者 object-fit: cover; */
+            position: absolute;
+            right: 2%;
+            top: 50%;
+            transform: translateY(-50%);
+            /* 垂直居中 */
+        }
+
+        .key .baidu-hot-search {
+            width: auto;
+            height: auto;
+            display: flex;
+            flex-direction: row;
+            flex-wrap: nowrap;
+
+        }
+
+        .key .baidu-hot-search a {
+            color: var(--center-hotSearch);
+            font-weight: bolder;
+            font-size: 11px;
+        }
+
+        .key .baidu-hot-search .hockIcon {
+            transform: translate(0, -4px);
+            height: 10px;
+            width: 14px;
+        }
+
+        .hockIcon img {
+            width: 100%;
+            height: 100%;
+        }
+
+
+
+        /* 页面右下侧图标样式 */
+        .right-icon {
+            display: flex;
+            flex-direction: column;
+            position: absolute;
+            bottom: 65px;
+            height: 85px;
+            right: 0;
+            justify-content: flex-start;
+            align-items: center;
+            width: 95px;
+        }
+
+
+
+        .icon-text {
+            position: fixed;
+            visibility: hidden;
+            bottom: 113px;
+            right: 80px;
+            /* 使用 visibility 属性隐藏元素 */
+            font-size: 13px;
+            width: 90px;
+            box-sizing: border-box;
+            height: 30px;
+            text-align: center;
+            color: var(--bottom-icon-text);
+            /* 水平居中 */
+            line-height: 30px;
+            /* 和盒子高度相等的值 */
+            border-radius: 5px;
+            box-shadow:
+                0 0 10px rgba(159, 159, 159, 0.3),
+                /* 增加模糊半径并降低透明度 */
+                1px 0 10px rgba(159, 159, 159, 0.3),
+                0 1px 10px rgba(159, 159, 159, 0.3),
+                -1px 0 10px rgba(80, 80, 80, 0.3);
+            /* 降低边框阴影的颜色透明度 */
+        }
+
+
+        .icon-blog {
+            display: none;
+            position: absolute;
+            text-align: center;
+            align-items: center;
+            width: 250px;
+            height: 100px;
+            border-radius: 20px;
+            background-color: white;
+            box-shadow:
+                0 0 8px rgba(240, 240, 240, 0.7),
+                /* 更浅的灰色阴影 */
+                2px 0 8px rgba(240, 240, 240, 0.7),
+                0 2px 8px rgba(240, 240, 240, 0.7),
+                -2px 0 8px rgba(240, 240, 240, 0.7);
+            right: 80px;
+            overflow: hidden;
+            bottom: 65px;
+        }
+
+
+
+        .icon-blog img {
+            width: 90%;
+            height: 90%;
+            object-fit: cover;
+            /* 确保图片完全填充父元素 */
+        }
+
+
+        .iconBox {
+            width: 40px;
+            height: 85px;
+            /* background-color: #4662d0; */
+            border-radius: 30px;
+            background-color: white;
+        }
+
+
+        .right-icon1 {
+            max-width: 40px;
+            max-height: 40px;
+            margin-bottom: 5px;
+            border-radius: 30px;
+            overflow: hidden;
+            background-color: white;
+        }
+
+        .right-icon1 img {
+            width: 100%;
+            height: 100%;
+        }
+
+        .right-icon2 {
+            max-width: 40px;
+            max-height: 40px;
+            right: 0;
+            bottom: 15%;
+            border-radius: 30px;
+            overflow: hidden;
+        }
+
+        .right-icon2 img {
+            width: 100%;
+            height: 100%;
+        }
+
+        .right-icon1:hover {
+            box-shadow: 0 3px 5px rgba(67, 67, 67, 0.5);
+            /* 设置阴影效果 */
+            cursor: pointer;
+        }
+
+        .right-icon2:hover {
+            box-shadow: 0 3px 5px rgba(67, 67, 67, 0.5);
+            /* 设置阴影效果 */
+            cursor: pointer;
+        }
+
+
+        .c-center .hotkey ul li a {
+            color: var(--center-list);
+            font-size: 12px;
+            padding-left: 10px;
+        }
+
+        .c-center .hotkey ul li a:hover {
+            color: var(--center-list-hover);
+            text-decoration: underline;
+        }
+
+        .custom-link {
+            color: var(--center-list);
+            /* 设置链接的默认颜色 */
+        }
+
+        .custom-link:hover {
+            color: var(--center-list-hover);
+            /* 设置链接悬停时的颜色 */
+        }
+
+
+        /* 单个排名榜 */
+        .one {
+            color: #fe2d46 !important;
+            display: inline-block;
+            vertical-align: middle;
+            line-height: 1;
+            margin: 0;
+            padding: 0;
+        }
+
+        .two {
+            color: #f60 !important;
+        }
+
+        .three {
+            color: #faa90e !important;
+        }
+
+        .top {
+            vertical-align: middle;
+        }
+
+
+        .top img {
+            width: 12px;
+            height: 16px;
+        }
+
+        .new,
+        .hot {
+            border-radius: 5px;
+            font-size: 8px;
+            color: #fff;
+            text-align: center;
+            line-height: 30px;
+            /* 与父元素行高一致 */
+            margin-left: 7px;
+            padding: 1px 3px;
+            /* 去掉底部内边距，并调整左右内边距 */
+            vertical-align: top;
+            /* 垂直居中对齐 */
+        }
+
+        .new {
+            background-color: rgb(250, 75, 75);
+        }
+
+        .hot {
+            background-color: #f60;
+        }
+
+
+        .m-menu {
+            border-radius: 20px;
+            box-shadow:
+                0 0 2px rgba(159, 159, 159, 0.5),
+                1px 0 5px rgba(159, 159, 159, 0.5),
+                0 1px 5px rgba(159, 159, 159, 0.5),
+                -1px 0 5px rgba(159, 159, 159, 0.5);
+            /* 使用transform属性将子菜单盒子水平居中 */
+        }
+
+
+        /* 尾部 */
+        footer {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+        }
+
+        .c-foot {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-wrap: wrap;
+            /* 如果内容过多，允许换行 */
+            list-style-type: none;
+            margin: 0;
+            bottom: 0;
+        }
+
+        .c-foot li {
+            padding: 0 2px;
+        }
+
+        .c-foot a {
+            text-decoration: none;
+            color: #b5b4b4;
+            display: inline-block;
+            padding: 5px 2px;
+            /* 设置链接的内边距 */
+            font-size: 5px;
+        }
+
+        .c-foot li a:hover {
+            color: black;
+        }
+
+        .c-foot .footImage2 a img,
+        .c-foot .footImage1 a img {
+            max-width: 12px;
+            max-height: 12px;
+        }
+
+        /* 搜索记录 */
+        .historyBox {
+            width: 100%;
+            position: absolute;
+            display: flex;
+            justify-content: center;
+            margin-top: 163px;
+            justify-content: space-around;
+            flex-direction: row;
+            flex-wrap: nowrap;
+            z-index: 9;
+        }
+
+        .search-history {
+            position: absolute;
+            width: 200px;
+            border-radius: 0 0 10px 10px;
+            margin-right: 58px;
+            height: auto;
+            max-height: 320px;
+            background-color: #ffffff;
+            border: 2px solid #4E6EF2;
+            border-top: none;
+            /* 移除原本的上边框 */
+            padding-top: 2px;
+            display: none;
+            z-index: 10;
+            overflow: auto;
+        }
+
+        .search-history::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 50%;
+            /* 将左边框移动到父元素的中间位置 */
+            width: 95%;
+            /* 上边框长度 */
+            height: 2px;
+            /* 上边框粗细 */
+            background-color: #F2F2F2;
+            /* 上边框颜色 */
+            transform: translateX(-50%);
+            /* 使用transform属性将边框居中 */
+        }
+
+        .search-history .searchList {
+            line-height: 30px;
+            font-size: 13px;
+            width: 100%;
+            padding: 10px 0;
+            text-indent: 15px;
+            /* 设置文本缩进 */
+        }
+
+        .search-history .searchList li:hover {
+            color: #2144d1;
+            background-color: #e9e9e9;
+            cursor: pointer;
+        }
+
+
+        /* 删除按钮图标样式 */
+        .delete-icon {
+            display: none;
+            /* 默认隐藏 */
+            cursor: pointer;
+            float: right;
+            margin-right: 20px;
+            color: #9195A3;
+        }
+
+        .delete-icon:hover {
+            color: #2144d1;
+        }
+
+        /* 显示删除图标 */
+        li:hover .delete-icon {
+            display: inline-block;
+        }
+
+        /* 尾部 */
+        footer {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+        }
+
+        .c-foot {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-wrap: wrap;
+            /* 如果内容过多，允许换行 */
+            list-style-type: none;
+            margin: 0;
+            bottom: 0;
+        }
+
+        .c-foot li {
+            padding: 0 6px;
+        }
+
+        .c-foot a {
+            text-decoration: none;
+            color: #b5b4b4;
+            display: inline-block;
+            padding: 6px 0;
+            /* 设置链接的内边距 */
+            font-size: 12px;
+        }
+
+        .c-foot .colorChange a {
+            color: var(--footer-colorChange);
+        }
+
+        .c-foot .colorChange a:hover {
+            color: var(--footer-colorChange-hover);
+        }
+
+        .c-foot .footImage2 a img,
+        .c-foot .footImage1 a img {
+            max-width: 28px;
+            max-height: 28px;
+        }
+
+        .c-foot .footImage2 a img {
+            margin-left: -10px;
+            margin-bottom: -5px;
+        }
+    }
