@@ -1,4 +1,5 @@
-//优化内容：1、loginBtn2的表单校验
+//优化内容：
+//1、loginBtn2的表单校验
 //2、loginbtn2的悬浮与点击样式封装为函数
 //3、modeBtn的显示与隐藏部分实现封装为函数
 //4、定义toggleHoverEvents通过传参方式处理底部隐藏框与百度热搜右边那个图片的变化
@@ -96,7 +97,6 @@
                 deleteIcon.textContent = "删除";
                 deleteIcon.classList.add("delete-icon");
                 li.appendChild(deleteIcon);
-
                 //展示搜索记录内容框
                 searchList.appendChild(li);
 
@@ -224,7 +224,6 @@
 
     //设置变量记录当前为登录/注册
     let nowIcon = 0;
-
     //获取登录选项-账户密码登录或者短信登录的元素
     const zhBox = document.querySelector(".zh");
     const dxBox = document.querySelector(".dx");
@@ -634,7 +633,7 @@
         if (changeImg.src === originalSrc) {
             changeImg.src = hoverSrc;
         }
-        });
+    });
     changeImg.addEventListener("mouseout", function () {
         // 如果原始图片未被更改
         if (changeImg.src === hoverSrc) {
