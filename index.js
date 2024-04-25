@@ -1,7 +1,7 @@
 //优化内容：
-//1、loginBtn2的表单校验
+//1、loginBtn2的表单校验，表单校验
 //2、loginbtn2的悬浮与点击样式封装为函数
-//3、modeBtn的显示与隐藏部分实现封装为函数
+//3、modeBtn的显示与隐藏部分实现封装为函数，showMode，hideMode
 //4、定义toggleHoverEvents通过传参方式处理底部隐藏框与百度热搜右边那个图片的变化
 //5、DataIndex处理了top图片在不同颜色模式下的状态，取消了嵌套if
 //6、在DataIndex下方优化了热搜列表在不同颜色模式下的状态，取消了重复条件判断，简化了判断语句
@@ -405,6 +405,8 @@
     loginBtn2.addEventListener("mouseout", handleBtn2Out);
     loginBtn2.addEventListener("mousedown", btn2HandleMouseDown);
     loginBtn2.addEventListener("mouseup", btn2HandleMouseUp);
+
+
 
     //获取四个输入框的元素
     const loginUsername = document.getElementById("loginUsername");
@@ -884,16 +886,17 @@
             const liColorClass1 = dataIndex === 1 ? "one" : "";
             const liColorClass2 = dataIndex === 2 ? "two" : "";
             const liColorClass3 = dataIndex === 3 ? "three" : "";
+
+            //判断热搜榜的序号是否为top，以及在不同模式下的颜色变化
             if (dataIndex === 0) {
                 let classes = liClass;
-                if (isBlack) {
-                classes += ` ${liColorClass1} ${liColorClass2} ${liColorClass3}`;
-                }
+                if (isBlack) { classes += ` ${liColorClass1} ${liColorClass2} ${liColorClass3}`; }
                 html += `<li class="${classes}">${indexContent}<a href="#" class="custom-link">${data.title}</a>`;
             } else {
                 let classes = `${liClass} ${liColorClass1} ${liColorClass2} ${liColorClass3}`;
                 html += `<li class="${classes}">${dataIndex}<a href="#" class="custom-link">${data.title}</a>`;
-            }     
+            }
+
             //判断显示数据中是否需要加这些样式
             if (data.isNew) {
                 html += `<span class="new">新</span>`;
