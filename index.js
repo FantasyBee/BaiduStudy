@@ -1,11 +1,3 @@
-//优化内容：
-//1、loginBtn2的表单校验，表单校验
-//2、loginbtn2的悬浮与点击样式封装为函数
-//3、modeBtn的显示与隐藏部分实现封装为函数，showMode，hideMode
-//4、定义toggleHoverEvents通过传参方式处理底部隐藏框与百度热搜右边那个图片的变化
-//5、DataIndex处理了top图片在不同颜色模式下的状态，取消了嵌套if
-//6、在DataIndex下方优化了热搜列表在不同颜色模式下的状态，取消了重复条件判断，简化了判断语句
-    
     // 1、搜索按钮功能实现
     // 获取搜索表单元素和搜索框元素
     var searchForm = document.querySelector("form");
@@ -41,16 +33,6 @@
     }
 
 
-
-
-
-
-
-
-
-
-
-
     // 2、百度搜索框历史记录，限制显示十条
     //将搜索记录要获取的元素放到全局变量这里
     //（本来是在window.onload中）
@@ -74,95 +56,76 @@
     }
 
 
-    //独立作用域，显示搜索记录为主
-    window.onload = function () {
-        // 判断本地存储是否有搜索记录
-        var searches = localStorage.getItem("searches");
-        var Searchings = searches && JSON.parse(searches).length > 0;
+//独立作用域，显示搜索记录为主
+window.onload = function () {
+    // 判断本地存储是否有搜索记录
+    var searches = localStorage.getItem("searches");
+    var Searchings = searches && JSON.parse(searches).length > 0;
 
-        //显示搜索记录方法实现
-        function showSearchHistory() {
-            //获取本地存储，并且清空
-            var searches = localStorage.getItem("searches");
-            //如果有值，则使用 JSON.parse(searches) 方法将其解析为 JavaScript 数组，如果没有值，则将 searches 变量赋值为空数组 []。
-            searches = searches ? JSON.parse(searches) : [];
-            //将搜索记录内容设置为空，以便下面进行渲染
-            searchList.innerHTML = "";
-            searches.forEach(function (item) {
-                var li = document.createElement("li");
-                li.textContent = item;
-
-                // 创建删除搜索历史的span按钮
-                var deleteIcon = document.createElement("span");
-                deleteIcon.textContent = "删除";
-                deleteIcon.classList.add("delete-icon");
-                li.appendChild(deleteIcon);
-                //展示搜索记录内容框
-                searchList.appendChild(li);
-
-                //闭包处理每个li元素
-                (function (searchItem) {
-                    li.addEventListener("click", function () {
-                        searchInput.value = searchItem;
-                        //移除搜索输入框的父节点的类名为 "clicked" 的类
-                        searchInput.parentNode.classList.remove("clicked");
-                        searchHistory.style.display = "none";
-                        searchIng(searchItem);
-                        // 保存搜索历史
-                        saveSearchHistory(searchItem);
-                        // 清空搜索框内容
-                        searchInput.value = "";
-                    });
-                    //调用删除搜索记录的方法
-                    deleteIcon.addEventListener("click", function (event) {
-                        //下面这句我本来是没想到的
-                        event.stopPropagation(); // 防止事件冒泡到 li 元素
-                        //删除操作
-                        deleteSearchItem(searchItem);
-                        //更新搜索记录
-                        showSearchHistory();
-                    });
-                })(item);
-            });
-            searchHistory.style.display = "block";
-        }
-
-        //创建删除按钮的方法实现
-        function deleteSearchItem(keyword) {
-            var searches = localStorage.getItem("searches");
-            searches = searches ? JSON.parse(searches) : [];
-            var index = searches.indexOf(keyword);
-            if (index !== -1) {
-                //调用splice方法，删除一个在index位置上的搜索记录
-                searches.splice(index, 1);
-                //将更新后的searches塞到本地存储，并且是以JSON方式
-                localStorage.setItem("searches", JSON.stringify(searches));
-                Searchings = searches.length > 0; // 更新Searchings变量的值
-            }
-        }
-
-        //为搜索框添加事件处理
-        searchInput.addEventListener("click", function () {
-            //已经实现搜索跳转，所以淘汰了一些功能，主界面的搜索输入只剩下样式功能
-            if (Searchings) {
-                searchInput.parentNode.classList.add("clicked");
-                showSearchHistory();
-            } else {
-                searchInput.parentNode.classList.add("two-clicked");
-                searchHistory.style.display = "none";
-            }
-        });
-
-        //为除搜索框区域以外添加监听器，以控制搜索记录的展示与隐藏，以及搜索框内容是否被转换为搜索记录的控制
-        document.addEventListener("click", function (event) {
-            if (!searchHistory.contains(event.target) && event.target !== searchInput) {
-                isSearching = false;
+    //显示搜索记录方法实现
+    function showSearchHistory() {
+        var searches = JSON.parse(localStorage.getItem("searches") || "[]");
+        searchList.innerHTML = ""; // 清空搜索记录内容
+        searches.forEach(function (item) {
+            var li = document.createElement("li");
+            li.textContent = item;
+            var deleteIcon = document.createElement("span");
+            deleteIcon.textContent = "删除";
+            deleteIcon.classList.add("delete-icon");
+            li.appendChild(deleteIcon);
+            searchList.appendChild(li);
+            li.addEventListener("click", function () {
+                searchInput.value = item;
                 searchInput.parentNode.classList.remove("clicked");
-                searchInput.parentNode.classList.remove("two-clicked");
                 searchHistory.style.display = "none";
-            }
+                searchIng(item);
+                saveSearchHistory(item);
+                searchInput.value = ""; // 清空搜索框内容
+            });
+            deleteIcon.addEventListener("click", function (event) {
+                event.stopPropagation();
+                deleteSearchItem(item);
+                showSearchHistory(); // 更新搜索记录
+            });
         });
-    };
+        searchHistory.style.display = "block"; // 显示搜索记录框
+    }
+
+    //创建删除按钮的方法实现
+    function deleteSearchItem(keyword) {
+        var searches = localStorage.getItem("searches");
+        searches = searches ? JSON.parse(searches) : [];
+        var index = searches.indexOf(keyword);
+        if (index !== -1) {
+            //调用splice方法，删除一个在index位置上的搜索记录
+            searches.splice(index, 1);
+            //将更新后的searches塞到本地存储，并且是以JSON方式
+            localStorage.setItem("searches", JSON.stringify(searches));
+            Searchings = searches.length > 0; // 更新Searchings变量的值
+        }
+    }
+
+    //为搜索框添加事件处理
+    searchInput.addEventListener("click", function () {
+        //已经实现搜索跳转，所以淘汰了一些功能，主界面的搜索输入只剩下样式功能
+        if (Searchings) {
+            searchInput.parentNode.classList.add("clicked");
+            showSearchHistory();
+        } else {
+            searchInput.parentNode.classList.add("two-clicked");
+            searchHistory.style.display = "none";
+        }
+    });
+    //为除搜索框区域以外添加监听器，以控制搜索记录的展示与隐藏，以及搜索框内容是否被转换为搜索记录的控制
+    document.addEventListener("click", function (event) {
+        if (!searchHistory.contains(event.target) && event.target !== searchInput) {
+            isSearching = false;
+            searchInput.parentNode.classList.remove("clicked");
+            searchInput.parentNode.classList.remove("two-clicked");
+            searchHistory.style.display = "none";
+        }
+    });
+};
 
     //为搜索框内的图片添加一些样式
     const img_2 = document.querySelector(".input1 .img-2 img");
@@ -188,14 +151,6 @@
     });
 
 
-
-
-
-
-
-
-
-
     //3、登录界面功能实现
     //获取登录的按钮元素，以及登录界面的元素
     const loginBtn = document.querySelector(".loginbtn");
@@ -205,13 +160,11 @@
     const closeBtn = document.querySelector(".close img");
     //获取忘记密码元素，以便切换登录状态该元素显示与隐藏
     const forget = document.querySelector(".forget");
-
     //为登录按钮设置监听器
     loginBtn.addEventListener("click", function () {
         //展示total，也就是登录界面
         total.style.display = "block";
     });
-
     //为登录界面中的closeBtn设置监听器。关闭登录界面
     document.addEventListener("click", function (event) {
         if (event.target === closeBtn) {
@@ -231,56 +184,51 @@
     const dx = document.querySelector(".dx p");
     const loginUp = document.querySelector(".loginUp");
     const signUp = document.querySelector(".signUp");
-    // 默认设置为 zhBox 点击状态
+    const forget1 = document.querySelector(".forget");
     zhBox.classList.add("active");
-
-    //为账号密码登录与短信登录的切换设置监听器
-    //点击账号密码登录
+    // 函数：控制显示/隐藏元素
+    function toggleDisplay(element, displayValue) {
+        element.style.display = displayValue;
+    }
+    // 函数：切换登录方式
+    function switchLoginType(activeElement, inactiveElement, displayValueActive, displayValueInactive, iconIndex) {
+        activeElement.classList.add("active");
+        inactiveElement.classList.remove("active");
+        nowIcon = iconIndex;
+        toggleDisplay(loginUp, displayValueActive);
+        toggleDisplay(signUp, displayValueInactive);
+        toggleDisplay(forget1, displayValueActive === "block" ? "visible" : "hidden");
+    }
+    // 为账号密码登录与短信登录的切换设置监听器
+    // 点击账号密码登录
     zhBox.addEventListener("click", function () {
-        zhBox.classList.add("active");
-        dxBox.classList.remove("active");
-        nowIcon = 0;
+        switchLoginType(zhBox, dxBox, "block", "none", 0);
         zh.style.color = "black";
         dx.style.color = "rgb(185, 185, 185)";
-        loginUp.style.display = "block";
-        signUp.style.display = "none";
-        forget.style.visibility = "visible";
-        // 重置 isChoose 为 false
-        isChoose = false;
-        checkBox.checked = false; // 取消勾选框的勾选状态
-        loginBtn2.style.backgroundColor = "#B8C5FA";
-        // 停止对短信注册中两个表单校验的提示
-        hideErrorMessage(noPhone);
-        hideErrorMessage(phoneError);
-        hideErrorMessage(noCheckWord);
-        signupUsername.style.border = "1px solid #ccc";
-        signupUsername.style.boxShadow = "";
+        clearCheckBtn();
+        hideErrorMessages(noPhone, phoneError, noCheckWord);
     });
-
-    //点击短信登录
+    // 点击短信登录
     dxBox.addEventListener("click", function () {
-        dxBox.classList.add("active");
-        zhBox.classList.remove("active");
-        nowIcon = 1;
+        switchLoginType(dxBox, zhBox, "none", "block", 1);
         dx.style.color = "black";
         zh.style.color = "rgb(185, 185, 185)";
-        signUp.style.display = "block";
-        loginUp.style.display = "none";
-        forget.style.visibility = "hidden";
-        // 重置 isChoose 为 false
-        isChoose = false;
+        clearCheckBtn();
         checkBox.checked = false; // 取消勾选框的勾选状态
-        loginBtn2.style.backgroundColor = "#B8C5FA";
-        // 停止对登录中两个表单校验的提示
-        hideErrorMessage(noUserName);
-        hideErrorMessage(noPassWord);
+        hideErrorMessages(noUserName,noPassWord);
     });
+
 
     //为登录界面的登录框设置样式
     const checkBox = document.getElementById("agreeCheckbox");
     const loginBtn2 = document.querySelector(".loginbtn2");
     let isChoose = false;
 
+    function clearCheckBtn(){
+        isChoose = false;
+        checkBox.checked = false; // 取消勾选框的勾选状态
+        loginBtn2.style.backgroundColor = "#B8C5FA";
+    }
     //勾选框控制登录按钮的状态
     checkBox.addEventListener("click", function () {
         isChoose = !isChoose;
@@ -301,7 +249,6 @@
     // 表单校验！
     loginBtn2.addEventListener("click", function () {
         let nowIconCheck = nowIcon;
-        
         if (isChoose) {
             if (nowIconCheck === 0) {
                 handleLogin();
@@ -310,19 +257,27 @@
             }
         }
     });
+
+    //集中处理表单校验的操作
+    function handleAll(...elements) {
+        const actions = [
+            hideErrorMessages,
+            displayErrorMessage,
+            focusAndClick
+        ];
+        elements.forEach((element, index) => {
+            const action = actions[index % actions.length];
+            action(element);
+        });
+    }
     //处理登录界面的表单校验
     function handleLogin() {
         if (loginUsername.value.trim() === "") {
-            hideErrorMessage(noPassWord);
-            displayErrorMessage(noUserName);
-            focusAndClick(loginUsername);
+            handleAll(noPassWord,noUserName,loginUsername);
         } else if (loginPassword.value.trim() === "" && loginUsername.value.trim() !== "") {
-            hideErrorMessage(noUserName);
-            displayErrorMessage(noPassWord);
-            focusAndClick(loginPassword);
+            handleAll(noUserName,noPassWord,loginPassword);
         } else {
-            hideErrorMessage(noUserName);
-            hideErrorMessage(noPassWord);
+            hideErrorMessages(noUserName,noPassWord);
         }
     }
     //处理短信注册部分的表单校验
@@ -331,21 +286,15 @@
         const isValidPhoneNumber = /^\d{11}$/.test(phoneNumber);
         //对短信登录的输入框做详细判断。
         if (phoneNumber === "") {
-            displayErrorMessage(noPhone);
-            focusAndClick(signupUsername);
-            hideErrorMessage(phoneError);
+            handleAll(phoneError,noPhone,signupUsername);
         } else if (!isValidPhoneNumber) {
-            hideErrorMessage(noPhone);
-            displayErrorMessage(phoneError);
+            handleAll(noPhone,phoneError,signupUsername);
             styleInvalidInput(signupUsername);
         } else if (signupPassword.value.trim() === "") {
-            hideErrorMessage(phoneError);
-            displayErrorMessage(noCheckWord);
-            focusAndClick(signupPassword);
+            handleAll(phoneError,noCheckWord,signupPassword);
+            restoreInputStyles(signupUsername);
         } else {
-            hideErrorMessage(noPhone);
-            hideErrorMessage(phoneError);
-            hideErrorMessage(noCheckWord);
+            hideErrorMessages(noPhone, phoneError, noCheckWord);
             restoreInputStyles(signupUsername);
         }
     }
@@ -354,9 +303,12 @@
         element.style.display = "block";
     }
     //定义一个隐藏的方法
-    function hideErrorMessage(element) {
-        element.style.display = "none";
+    function hideErrorMessages(...elements) {
+        elements.forEach(element => {
+            element.style.display = "none";
+        });
     }
+    
     //针对哪个输入框内容不行哪里获得样式变化
     function focusAndClick(element) {
         element.focus();
@@ -376,35 +328,30 @@
 
 
     //下面是针对登录按钮的各种情况做的细节处理
-    const handleBtn2Hover = () => {
+    loginBtn2.addEventListener("mouseover", function () {
         if (!isChoose) {
             loginBtn2.style.backgroundColor = "rgb(165, 178, 237)";
-        } else {
+        } else if (isChoose) {
             loginBtn2.style.backgroundColor = "#4662D9";
         }
-    };
-    const handleBtn2Out = () => {
+        });
+    loginBtn2.addEventListener("mouseout", function () {
         if (!isChoose) {
             loginBtn2.style.backgroundColor = "#B8C5FA";
-        } else {
+        } else if (isChoose) {
             loginBtn2.style.backgroundColor = "#4E6EF2";
         }
-    };
-    const btn2HandleMouseDown = () => {
+        });
+    loginBtn2.addEventListener("mousedown", function () {
         if (isChoose) {
             loginBtn2.style.boxShadow = "0 2px 2px #DCE2FC";
         }
-    };
-    const btn2HandleMouseUp = () => {
+        });
+    loginBtn2.addEventListener("mouseup", function () {
         if (isChoose) {
             loginBtn2.style.boxShadow = "0 8px 12px rgb(217, 224, 252)";
         }
-    };
-    
-    loginBtn2.addEventListener("mouseover", handleBtn2Hover);
-    loginBtn2.addEventListener("mouseout", handleBtn2Out);
-    loginBtn2.addEventListener("mousedown", btn2HandleMouseDown);
-    loginBtn2.addEventListener("mouseup", btn2HandleMouseUp);
+    });
 
 
 
@@ -437,11 +384,6 @@
     handleInputField(signupUsername);
     // 处理注册密码输入框
     handleInputField(signupPassword);
-
-
-
-
-
 
 
     //4、辅助模式的功能实现
@@ -477,21 +419,14 @@
         // 判断当前颜色模式是否是黑色
         let isBlack = modeColorIndex === 1 || modeColorIndex === 2 ? false : modeColorIndex === 0;
         // 切换辅助模式的显示和隐藏
-        if (!modeBlockVisible) {
-            showMode();
-        } else {
-            hideMode();
-        }
+        if (!modeBlockVisible) {showMode();}
+        else {hideMode();}
         // 更新列表
         updateList(isBlack);
     });
 
-    // 显示辅助模式
-    function showMode() {
-        placeHolder.style.display = "block";
-        modeBlock.style.display = "block";
-        adjustMarginTop1();
-        modeBlockVisible = true;
+    //定义恢复打开辅助模式的状态的背景颜色变化
+    function reChangeColor(){
         let modeColorIndex = colorIndex;
         // 根据颜色模式设置相应样式和内容
         if (modeColorIndex === 1) {
@@ -505,6 +440,15 @@
         } else if (modeColorIndex === 0) {
             changeImg.src = "https://img2.imgtp.com/2024/04/14/KFdWEyII.png";
         }
+    }
+
+    // 显示辅助模式
+    function showMode() {
+        placeHolder.style.display = "block";
+        modeBlock.style.display = "block";
+        adjustMarginTop1();
+        modeBlockVisible = true;
+        reChangeColor();
     }
     // 隐藏辅助模式
     function hideMode() {
@@ -598,14 +542,6 @@
     }
 
 
-
-
-
-
-
-
-
-
     //5、暗色模式功能模块实现
     // 获取暗色模式按钮元素
     const changeColor = document.getElementById("changeColor");
@@ -642,58 +578,94 @@
             changeImg.src = originalSrc;
         }
     });
-    //底部隐藏框的颜色变化，有点繁杂
-    function footImgWhiteHover(){footImage2.src = "https://img2.imgtp.com/2024/04/13/erwyMj6W.png";}
-    function footImgBlackHover(){footImage2.src = "https://img2.imgtp.com/2024/04/13/IEPpMS1N.png";}
-    function footImgBlueHover(){footImage2.src = "https://img2.imgtp.com/2024/04/13/OhsOTqhM.png";}
-    function footImgWhite(){footImage2.src = "https://img2.imgtp.com/2024/04/07/sklTtWbE.png";}
-    function footImgBlack(){footImage2.src = "https://img2.imgtp.com/2024/04/07/DM0ykKjW.png";}
-    function footImgBlue(){footImage2.src = "https://img2.imgtp.com/2024/04/07/ltQ2H3pP.png";}
-    //百度热搜的颜色变化，有点繁杂
-    function hockImgWhiteHover(){hockIcon.src = "https://img2.imgtp.com/2024/04/16/MLi9f8Wc.png";}
-    function hockImgBlackHover(){hockIcon.src = "https://img2.imgtp.com/2024/04/16/aKxjPpY2.png";}
-    function hockImgBlueHover(){hockIcon.src = "https://img2.imgtp.com/2024/04/16/0KEgtxZz.png";}
-    function hockImgWhite(){hockIcon.src = "https://img2.imgtp.com/2024/04/16/5stoSUYO.png";}
-    function hockImgBlack(){hockIcon.src = "https://img2.imgtp.com/2024/04/16/bFhmVrya.png";}
-    function hockImgBlue(){hockIcon.src = "https://img2.imgtp.com/2024/04/16/R7johBzS.png";}
 
-    // 定义一个函数用于添加或移除事件监听器
-    function toggleHoverEvents(element, oriGinHoverIn, oriGinHoverOut, hoverIn, hoverOut) {
-        element.removeEventListener("mouseover", oriGinHoverIn);
-        element.removeEventListener("mouseout", oriGinHoverOut);
-        element.addEventListener("mouseover", hoverIn);
-        element.addEventListener("mouseout", hoverOut);
+    //定义两个图片数组，索引前三位是mouseout的状态在不同颜色背景下的图片，后三位则是mouseover
+    const hockChangeImages = [
+        "https://img2.imgtp.com/2024/04/16/5stoSUYO.png",
+        "https://img2.imgtp.com/2024/04/16/bFhmVrya.png",
+        "https://img2.imgtp.com/2024/04/16/R7johBzS.png",
+        "https://img2.imgtp.com/2024/04/16/MLi9f8Wc.png",
+        "https://img2.imgtp.com/2024/04/16/aKxjPpY2.png",
+        "https://img2.imgtp.com/2024/04/16/0KEgtxZz.png",
+    ];
+    const footChangeImages = [
+        "https://img2.imgtp.com/2024/04/07/sklTtWbE.png",
+        "https://img2.imgtp.com/2024/04/07/DM0ykKjW.png",
+        "https://img2.imgtp.com/2024/04/07/ltQ2H3pP.png",
+        "https://img2.imgtp.com/2024/04/13/erwyMj6W.png",
+        "https://img2.imgtp.com/2024/04/13/IEPpMS1N.png",
+        "https://img2.imgtp.com/2024/04/13/OhsOTqhM.png",
+    ];
+
+    function getHockImg(array, index) {
+        hockIcon.src = array[index];
     }
-    //初始界面也要保持白色主题下底部隐藏窗样式
-    baiduHotSearch.addEventListener("mouseover",hockImgWhiteHover);
-    baiduHotSearch.addEventListener("mouseout",hockImgWhite);
-    footImage2.addEventListener("mouseover",footImgWhiteHover);
-    footImage2.addEventListener("mouseout",footImgWhite);
+    function getFootImg(array, index) {
+        footImage2.src = array[index];
+    }
 
+    // 初始界面也要保持白色主题下底部隐藏窗样式
+    baiduHotSearch.addEventListener("mouseover", () => getHockImg(hockChangeImages, 3));
+    baiduHotSearch.addEventListener("mouseout", () => getHockImg(hockChangeImages, 0));
+    footImage2.addEventListener("mouseover", () => getFootImg(footChangeImages,3));
+    footImage2.addEventListener("mouseout", () => getFootImg(footChangeImages,0));
 
     //  重点变量！！！
     //  控制着挺多内容变化
     //  定义一个变量，记录当前页面是否为黑色
     let isBlack = false;
+    //设定不同颜色模式需要更改的图片，定义为数组
+    const blackImg = [
+        "https://img2.imgtp.com/2024/04/14/MMmDhi5m.png",
+        "https://img2.imgtp.com/2024/04/05/I97ge7Mn.png",
+        "https://img2.imgtp.com/2024/04/04/DjORnvDI.png",
+        "https://img2.imgtp.com/2024/04/07/escGHu3o.png",
+        "https://img2.imgtp.com/2024/04/07/DM0ykKjW.png",
+        "https://img2.imgtp.com/2024/04/16/bFhmVrya.png",
+        "https://img2.imgtp.com/2024/04/09/UpgCGanY.png",
+    ];
+    const whiteImg = [
+        "https://img2.imgtp.com/2024/04/14/KFdWEyII.png",
+        "https://img2.imgtp.com/2024/04/04/vBgvxHgF.png",
+        "https://img2.imgtp.com/2024/04/06/KXAkJk8V.png",
+        "https://img2.imgtp.com/2024/04/07/zc7C28Hn.png",
+        "https://img2.imgtp.com/2024/04/07/sklTtWbE.png",
+        "https://img2.imgtp.com/2024/04/16/5stoSUYO.png",
+        "https://img2.imgtp.com/2024/04/10/r3ta4xI7.png",
+    ];
+    const blueImg = [
+        "https://img2.imgtp.com/2024/04/14/qhucm2rp.png",
+        "https://img2.imgtp.com/2024/04/05/I97ge7Mn.png",
+        "https://img2.imgtp.com/2024/04/06/oDSslobN.png",
+        "https://img2.imgtp.com/2024/04/07/Iql4or8D.png",
+        "https://img2.imgtp.com/2024/04/07/ltQ2H3pP.png",
+        "https://img2.imgtp.com/2024/04/16/R7johBzS.png",
+        "https://img2.imgtp.com/2024/04/06/PtWXLL2J.png",
+    ];
+
+    function colorChangeImg(array) {
+        // 替换下面的变量名为实际需要按顺序更换的图片
+        const elements = [changeImg, AiBtn, logoChange, footImage1, footImage2, hockIcon, image];
+        array.forEach((url, index) => {
+            if (elements[index]) {
+                elements[index].src = url;
+            }
+        });
+    }
 
     //暗色模式主方法实现
     function changeToBlack() {
         isBlack = true;
         // 在更改颜色后立即调用updateList函数以及换一换图片更改
         updateList(isBlack);
+        colorChangeImg(blackImg);
         document.body.style.backgroundColor = "#1F1E24";
-        changeImg.src = "https://img2.imgtp.com/2024/04/14/MMmDhi5m.png";
-        //给设置元素带上监听器
-        AiBtn.src = "https://img2.imgtp.com/2024/04/05/I97ge7Mn.png";
-        logoChange.src = "https://img2.imgtp.com/2024/04/04/DjORnvDI.png";
-        footImage1.src = "https://img2.imgtp.com/2024/04/07/escGHu3o.png";
-        footImage2.src = "https://img2.imgtp.com/2024/04/07/DM0ykKjW.png";
-        toggleHoverEvents(footImage2,footImgWhiteHover,footImgWhite,footImgBlackHover,footImgBlack);
-        toggleHoverEvents(baiduHotSearch,hockImgWhiteHover,hockImgWhite,hockImgBlackHover,hockImgBlack);
+        footImage2.addEventListener("mouseover", () => getFootImg(footChangeImages,4));
+        footImage2.addEventListener("mouseout", () => getFootImg(footChangeImages,1));
         //百度热搜
-        hockIcon.src = "https://img2.imgtp.com/2024/04/16/bFhmVrya.png";
+        baiduHotSearch.addEventListener("mouseover", () => getHockImg(hockChangeImages, 4));
+        baiduHotSearch.addEventListener("mouseout", () => getHockImg(hockChangeImages, 1));
         //换一换的图片hover颜色变化
-        image.src = "https://img2.imgtp.com/2024/04/09/UpgCGanY.png";
         //移除白色模式下的换一换图片监听器
         h_icon.removeEventListener("mouseover", handleMouseOver);
         h_icon.removeEventListener("mouseout", handleMouseOut);
@@ -703,16 +675,12 @@
     function changeToWhite() {
         isBlack = false;
         document.body.style.backgroundColor = "white";
-        image.src = "https://img2.imgtp.com/2024/04/10/r3ta4xI7.png";
-        changeImg.src = "https://img2.imgtp.com/2024/04/14/KFdWEyII.png";
-        AiBtn.src = "https://img2.imgtp.com/2024/04/04/vBgvxHgF.png";
-        logoChange.src = "https://img2.imgtp.com/2024/04/06/KXAkJk8V.png";
-        footImage1.src = "https://img2.imgtp.com/2024/04/07/zc7C28Hn.png";
-        footImage2.src = "https://img2.imgtp.com/2024/04/07/sklTtWbE.png";
-        toggleHoverEvents(footImage2,hockImgBlueHover,hockImgBlue,footImgWhiteHover,footImgWhite);
-        toggleHoverEvents(baiduHotSearch,hockImgBlueHover,hockImgBlue,hockImgWhiteHover,hockImgWhite);
+        colorChangeImg(whiteImg);
+        footImage2.addEventListener("mouseover", () => getFootImg(footChangeImages,3));
+        footImage2.addEventListener("mouseout", () => getFootImg(footChangeImages,0));
         //百度热搜
-        hockIcon.src = "https://img2.imgtp.com/2024/04/16/5stoSUYO.png";
+        baiduHotSearch.addEventListener("mouseover", () => getHockImg(hockChangeImages, 3));
+        baiduHotSearch.addEventListener("mouseout", () => getHockImg(hockChangeImages, 0));
         //增加白色模式下的换一换图片监听器
         h_icon.addEventListener("mouseover", handleMouseOver);
         h_icon.addEventListener("mouseout", handleMouseOut);
@@ -722,18 +690,11 @@
     function changeToBlue() {
         isBlack = true;
         document.body.style.backgroundColor = "#141E42";
-        changeImg.src = "https://img2.imgtp.com/2024/04/14/qhucm2rp.png";
-        logoChange.src = "https://img2.imgtp.com/2024/04/06/oDSslobN.png";
-        footImage1.src = "https://img2.imgtp.com/2024/04/07/Iql4or8D.png";
-        footImage2.src = "https://img2.imgtp.com/2024/04/07/ltQ2H3pP.png";
-        toggleHoverEvents(footImage2,footImgBlackHover,footImgBlack,footImgBlueHover,footImgBlue);
-        toggleHoverEvents(baiduHotSearch,hockImgBlackHover,hockImgBlack,hockImgBlueHover,hockImgBlue);
-        //百度热搜
-        hockIcon.src = "https://img2.imgtp.com/2024/04/16/R7johBzS.png";
-        AiBtn.src = "https://img2.imgtp.com/2024/04/05/I97ge7Mn.png";
-        //换一换的图片hover颜色变化
-        image.src = "https://img2.imgtp.com/2024/04/06/PtWXLL2J.png";
-        //移除白色模式下的换一换图片监听器
+        colorChangeImg(blueImg);
+        footImage2.addEventListener("mouseover", () => getFootImg(footChangeImages,5));
+        footImage2.addEventListener("mouseout", () => getFootImg(footChangeImages,2));
+        baiduHotSearch.addEventListener("mouseover", () => getHockImg(hockChangeImages, 5));
+        baiduHotSearch.addEventListener("mouseout", () => getHockImg(hockChangeImages, 2));
         h_icon.removeEventListener("mouseover", handleMouseOver);
         h_icon.removeEventListener("mouseout", handleMouseOut);
     }
@@ -756,13 +717,6 @@
         }
         updateList(isBlack);
     });
-
-
-
-
-
-
-
 
 
     //5.5、 换一换的图片旋转功能实现
@@ -790,12 +744,6 @@
     function handleMouseOut() {
         image.src = "https://img2.imgtp.com/2024/04/10/r3ta4xI7.png";
     }
-
-
-
-
-
-
 
 
     // 6、换一换功能实现
@@ -845,73 +793,39 @@
             { title: "百日誓师被网暴女孩考进人大新闻系", isNew: false, isHot: false },
         ],
     ];
-    // 当前显示的测试数据索引
     let currentDataIndex = 0;
-    // 定义一个更新列表函数，这个关键方法
+
     function updateList(isBlack) {
-        let colorIndexNow = colorIndex;
-        //当前显示的测试数据
+        const colorIndexNow = colorIndex;
         const currentData = allTestData[currentDataIndex];
-        //定义html元素，并且设置为空字符
         let html = "";
-        // 计算当前序号
         const startIndex = currentDataIndex * 6;
-        // 将每组数据分成两个列表项，因为html那边就是分两部分，一左一右。
+    
         for (let i = 0; i < currentData.length; i += 3) {
-            //获取html的style样式，直接借用css样式，不需要重新定义
             html += "<ul class='middle-context'>";
-            // 对每个分组内的数据进行处理
             for (let j = i; j < i + 3 && j < currentData.length; j++) {
-            const data = currentData[j];
-            const liIndex = j - i + 1;
-            //为每一个li元素设置类名，这个类目由序号得出
-            const liClass = `li-${liIndex}`;
-            const dataIndex = startIndex + j; // 计算序号
-            let indexContent = dataIndex; // 默认使用数字作为序号内容
-
-            // 检查序号是否为 1，如果是，则添加自定义类
-            //下面还对三种颜色模式做了判断
-            if (dataIndex === 0) {
-                let imageUrl = 'https://img2.imgtp.com/2024/04/14/EFhJMrmN.png'; // 默认图片链接
-                if (modeBlockVisible && colorIndexNow === 1) {
-                    imageUrl = 'https://img2.imgtp.com/2024/04/15/6MZy22vi.png';
-                } else if (modeBlockVisible && colorIndexNow === 2) {
-                    imageUrl = 'https://img2.imgtp.com/2024/04/15/BXypA2gb.png';
+                const data = currentData[j];
+                const liIndex = j - i + 1;
+                const dataIndex = startIndex + j;
+                let indexContent = dataIndex;
+                let liClass = `li-${liIndex}`;
+                let classes = isBlack ? `${liClass} ${dataIndex <= 3 ? `one two three` : ""}` : `${liClass}`;
+                let linkContent = `<a href="#" class="custom-link">${data.title}</a>`;
+                if (dataIndex === 0) {
+                    let imageUrl = 'https://img2.imgtp.com/2024/04/14/EFhJMrmN.png';
+                    if (modeBlockVisible && colorIndexNow === 1) { imageUrl = 'https://img2.imgtp.com/2024/04/15/6MZy22vi.png'; }
+                    else if (modeBlockVisible && colorIndexNow === 2) { imageUrl = 'https://img2.imgtp.com/2024/04/15/BXypA2gb.png'; }
+                    indexContent = `<img src='${imageUrl}' alt='No.1' class='top-image'>`;
                 }
-                indexContent = `<img src='${imageUrl}' alt='No.1' style='display: inline-block; vertical-align: middle;
-                                    line-height: 30px; width: 18px; height: 18px; margin: -5px -5px 0 -4px;' class='top'>`;
-            }    
-            
-            //调用css中的对于2/3序号颜色的样式
-            const liColorClass1 = dataIndex === 1 ? "one" : "";
-            const liColorClass2 = dataIndex === 2 ? "two" : "";
-            const liColorClass3 = dataIndex === 3 ? "three" : "";
-
-            //判断热搜榜的序号是否为top，以及在不同模式下的颜色变化
-            if (dataIndex === 0) {
-                let classes = liClass;
-                if (isBlack) { classes += ` ${liColorClass1} ${liColorClass2} ${liColorClass3}`; }
-                html += `<li class="${classes}">${indexContent}<a href="#" class="custom-link">${data.title}</a>`;
-            } else {
-                let classes = `${liClass} ${liColorClass1} ${liColorClass2} ${liColorClass3}`;
-                html += `<li class="${classes}">${dataIndex}<a href="#" class="custom-link">${data.title}</a>`;
+                if (data.isNew) { linkContent += `<span class="new">新</span>`; }
+                if (data.isHot) { linkContent += `<span class="hot">热</span>`; }
+                html += `<li class="${classes}">${indexContent}${linkContent}</li>`;
             }
-
-            //判断显示数据中是否需要加这些样式
-            if (data.isNew) {
-                html += `<span class="new">新</span>`;
-            }
-            if (data.isHot) {
-                html += `<span class="hot">热</span>`;
-            }
-            html += `</li>`;
-            }
-            //html语句结尾
             html += "</ul>";
         }
-        // 替换整个列表块的内容
         list.innerHTML = html;
     }
+    
     // 监听器，换一换功能实现
     changeButton.addEventListener("click", function () {
         // 获取下一个测试数据集的索引
