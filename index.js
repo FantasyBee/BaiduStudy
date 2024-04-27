@@ -184,11 +184,14 @@ window.onload = function () {
     const dx = document.querySelector(".dx p");
     const loginUp = document.querySelector(".loginUp");
     const signUp = document.querySelector(".signUp");
-    const forget1 = document.querySelector(".forget");
+    const forgetTest = document.querySelector(".forget");
     zhBox.classList.add("active");
     // 函数：控制显示/隐藏元素
     function toggleDisplay(element, displayValue) {
         element.style.display = displayValue;
+    }
+    function toggleVisibility(element, displayValue) {
+        element.style.visibility = displayValue;
     }
     // 函数：切换登录方式
     function switchLoginType(activeElement, inactiveElement, displayValueActive, displayValueInactive, iconIndex) {
@@ -197,7 +200,7 @@ window.onload = function () {
         nowIcon = iconIndex;
         toggleDisplay(loginUp, displayValueActive);
         toggleDisplay(signUp, displayValueInactive);
-        toggleDisplay(forget1, displayValueActive === "block" ? "visible" : "hidden");
+        toggleVisibility(forgetTest, displayValueActive === "block" ? "visible" : "hidden");
     }
     // 为账号密码登录与短信登录的切换设置监听器
     // 点击账号密码登录
@@ -249,13 +252,8 @@ window.onload = function () {
     // 表单校验！
     loginBtn2.addEventListener("click", function () {
         let nowIconCheck = nowIcon;
-        if (isChoose) {
-            if (nowIconCheck === 0) {
-                handleLogin();
-            } else if (nowIconCheck === 1) {
-                handleSignup();
-            }
-        }
+        if (!isChoose) return;
+        nowIconCheck === 0 ? handleLogin() : handleSignup();
     });
 
     //集中处理表单校验的操作
@@ -272,32 +270,41 @@ window.onload = function () {
     }
     //处理登录界面的表单校验
     function handleLogin() {
-        if (loginUsername.value.trim() === "") {
-            handleAll(noPassWord,noUserName,loginUsername);
-        } else if (loginPassword.value.trim() === "" && loginUsername.value.trim() !== "") {
-            handleAll(noUserName,noPassWord,loginPassword);
-        } else {
-            hideErrorMessages(noUserName,noPassWord);
+        switch (true) {
+            case loginUsername.value.trim() === "":
+                handleAll(noPassWord, noUserName, loginUsername);
+                break;
+            case loginPassword.value.trim() === "" && loginUsername.value.trim() !== "":
+                handleAll(noUserName, noPassWord, loginPassword);
+                break;
+            default:
+                hideErrorMessages(noUserName, noPassWord);
+                break;
         }
     }
-    //处理短信注册部分的表单校验
+    //处理短信登录界面的表单校验    
     function handleSignup() {
         const phoneNumber = signupUsername.value.trim();
         const isValidPhoneNumber = /^\d{11}$/.test(phoneNumber);
-        //对短信登录的输入框做详细判断。
-        if (phoneNumber === "") {
-            handleAll(phoneError,noPhone,signupUsername);
-        } else if (!isValidPhoneNumber) {
-            handleAll(noPhone,phoneError,signupUsername);
-            styleInvalidInput(signupUsername);
-        } else if (signupPassword.value.trim() === "") {
-            handleAll(phoneError,noCheckWord,signupPassword);
-            restoreInputStyles(signupUsername);
-        } else {
-            hideErrorMessages(noPhone, phoneError, noCheckWord);
-            restoreInputStyles(signupUsername);
+        switch (true) {
+            case phoneNumber === "":
+                handleAll(phoneError, noPhone, signupUsername);
+                break;
+            case !isValidPhoneNumber:
+                handleAll(noPhone, phoneError, signupUsername);
+                styleInvalidInput(signupUsername);
+                break;
+            case signupPassword.value.trim() === "":
+                handleAll(phoneError, noCheckWord, signupPassword);
+                restoreInputStyles(signupUsername);
+                break;
+            default:
+                hideErrorMessages(noPhone, phoneError, noCheckWord);
+                restoreInputStyles(signupUsername);
+                break;
         }
     }
+    
     //定义一个显示的方法
     function displayErrorMessage(element) {
         element.style.display = "block";
@@ -426,21 +433,27 @@ window.onload = function () {
     });
 
     //定义恢复打开辅助模式的状态的背景颜色变化
-    function reChangeColor(){
+    function reChangeColor() {
         let modeColorIndex = colorIndex;
-        // 根据颜色模式设置相应样式和内容
-        if (modeColorIndex === 1) {
-            changeToBlack();
-            document.body.setAttribute("body-theme", "black");
-            image.src = "https://img2.imgtp.com/2024/04/02/p4b9BAcP.png";
-        } else if (modeColorIndex === 2) {
-            changeToBlue();
-            document.body.setAttribute("body-theme", "blue");
-            image.src = "https://img2.imgtp.com/2024/04/06/PtWXLL2J.png";
-        } else if (modeColorIndex === 0) {
-            changeImg.src = "https://img2.imgtp.com/2024/04/14/KFdWEyII.png";
+        switch (modeColorIndex) {
+            case 1:
+                changeToBlack();
+                document.body.setAttribute("body-theme", "black");
+                image.src = "https://img2.imgtp.com/2024/04/02/p4b9BAcP.png";
+                break;
+            case 2:
+                changeToBlue();
+                document.body.setAttribute("body-theme", "blue");
+                image.src = "https://img2.imgtp.com/2024/04/06/PtWXLL2J.png";
+                break;
+            case 0:
+                changeImg.src = "https://img2.imgtp.com/2024/04/14/KFdWEyII.png";
+                break;
+            default:
+                break;
         }
     }
+    
 
     // 显示辅助模式
     function showMode() {
@@ -522,25 +535,26 @@ window.onload = function () {
         });
     });
 
-    // 调整更多下拉弹窗在不同宽度屏幕下距离顶部的函数
     function adjustMarginTop1() {
-        // 获取当前屏幕宽度
         const screenWidth = window.innerWidth;
-        // 根据不同的屏幕宽度设置不同的 marginTop
         let marginTop;
-        if (screenWidth <= 500) {
-            marginTop = "120px";
-        } else if (screenWidth > 500 && screenWidth < 800) {
-            marginTop = "140px";
-        } else if (screenWidth >= 800 && screenWidth < 1200) {
-            marginTop = "145px";
-        } else {
-            marginTop = "180px";
+        switch (true) {
+            case screenWidth <= 500:
+                marginTop = "120px";
+                break;
+            case screenWidth < 800:
+                marginTop = "140px";
+                break;
+            case screenWidth < 1200:
+                marginTop = "145px";
+                break;
+            default:
+                marginTop = "180px";
+                break;
         }
-        // 设置元素的 marginTop
         moreBox.style.marginTop = marginTop;
     }
-
+    
 
     //5、暗色模式功能模块实现
     // 获取暗色模式按钮元素
@@ -702,21 +716,28 @@ window.onload = function () {
     let colorIndex = 0;
     //设置监听器，切换背景色的方法调用在这里实现
     changeColor.addEventListener("click", function () {
-        if (colorIndex === 0) {
-            changeToBlack();
-            document.body.setAttribute("body-theme", "black");
-            colorIndex = 1;
-        } else if (colorIndex === 1) {
-            changeToBlue();
-            document.body.setAttribute("body-theme", "blue");
-            colorIndex = 2;
-        } else if (colorIndex === 2) {
-            changeToWhite();
-            document.body.setAttribute("body-theme", "white");
-            colorIndex = 0;
+        switch (colorIndex) {
+            case 0:
+                changeToBlack();
+                document.body.setAttribute("body-theme", "black");
+                colorIndex = 1;
+                break;
+            case 1:
+                changeToBlue();
+                document.body.setAttribute("body-theme", "blue");
+                colorIndex = 2;
+                break;
+            case 2:
+                changeToWhite();
+                document.body.setAttribute("body-theme", "white");
+                colorIndex = 0;
+                break;
+            default:
+                break;
         }
         updateList(isBlack);
     });
+    
 
 
     //5.5、 换一换的图片旋转功能实现
@@ -746,84 +767,86 @@ window.onload = function () {
     }
 
 
+
     // 6、换一换功能实现
     // 获取换一换按钮元素，以及热搜列表元素
     const changeButton = document.getElementById("change");
     const list = document.getElementById("list");
     //定义总测试数组
     const allTestData = [
-        [
-            { title: "习近平总书记出席全国两会纪实", isNew: true, isHot: false },
-            { title: "朋友圈发这些可能会被封号", isNew: true, isHot: false },
-            { title: "隧道内开车门恶意别车?警方通报", isNew: false, isHot: true },
-            { title: "这些两会建议冲上热搜", isNew: false, isHot: true },
-            { title: "39元瑞士卷被黄牛炒到120元", isNew: false, isHot: false },
-            { title: "荷兰欲砸近200亿元挽留光刻机巨头", isNew: false, isHot: false }
-        ],
-        [
-            { title: "王诗龄回国穿近4万套装", isNew: false, isHot: false },
-            { title: "国足获胜4万多名球迷大合唱", isNew: false, isHot: false },
-            { title: "外卖检出粪便尿液?假的", isNew: false, isHot: false },
-            { title: "考生莫言北大复试成绩公布", isNew: false, isHot: true },
-            { title: "特朗普身家暴涨至超500亿", isNew: false, isHot: false },
-            { title: "结婚10年育3子 妻子报警称丈夫强奸", isNew: false, isHot: false }
-        ],
-        [
-            { title: "乌克兰东部最大发电厂被摧毁", isNew: true, isHot: false },
-            { title: "黄山辟谣天都峰4月1日开放", isNew: false, isHot: false },
-            { title: "全上海一年的豪宅一天就卖完？", isNew: false, isHot: true },
-            { title: "13岁女孩失联5天:曾到家却未进?", isNew: false, isHot: false },
-            { title: "奔驰加塞事件原视频", isNew: false, isHot: false },
-            { title: "月薪15000住家阿姨的一天", isNew: false, isHot: false },
-        ],
-        [
-            { title: "吴艳妮:完全不能接受被叫做网红", isNew: true, isHot: false },
-            { title: "校方通报高校老师诱骗女生当小三", isNew: false, isHot: false },
-            { title: "萌娃大哭要出去玩 见门开了秒变脸", isNew: false, isHot: false },
-            { title: "万达将获约600亿元投资", isNew: false, isHot: false },
-            { title: "95后女警眼神杀吓懵嫌疑人", isNew: false, isHot: true },
-            { title: "男子账户里的2470万保住了", isNew: false, isHot: false },
-        ],
-        [
-            { title: "店主回应女子称加香菜被收10元", isNew: false, isHot: false },
-            { title: "上海偶遇陆毅鲍蕾一家四口", isNew: false, isHot: false },
-            { title: "5岁男童身亡,其母亲发声", isNew: false, isHot: false },
-            { title: "13岁男孩起诉妈妈归还100万房款", isNew: false, isHot: false },
-            { title: "雷军能不能生产一下相机", isNew: false, isHot: true },
-            { title: "百日誓师被网暴女孩考进人大新闻系", isNew: false, isHot: false },
-        ],
-    ];
-    let currentDataIndex = 0;
+        { title: "习近平总书记出席全国两会纪实", isNew: true, isHot: false },
+        { title: "朋友圈发这些可能会被封号", isNew: true, isHot: false },
+        { title: "隧道内开车门恶意别车?警方通报", isNew: false, isHot: true },
+        { title: "这些两会建议冲上热搜", isNew: false, isHot: true },
+        { title: "39元瑞士卷被黄牛炒到120元", isNew: false, isHot: false },
+        { title: "荷兰欲砸近200亿元挽留光刻机巨头", isNew: false, isHot: false },
 
+        { title: "王诗龄回国穿近4万套装", isNew: false, isHot: false },
+        { title: "国足获胜4万多名球迷大合唱", isNew: false, isHot: false },
+        { title: "外卖检出粪便尿液?假的", isNew: false, isHot: false },
+        { title: "考生莫言北大复试成绩公布", isNew: false, isHot: true },
+        { title: "特朗普身家暴涨至超500亿", isNew: false, isHot: false },
+        { title: "结婚10年育3子 妻子报警称丈夫强奸", isNew: false, isHot: false },
+
+        { title: "乌克兰东部最大发电厂被摧毁", isNew: true, isHot: false },
+        { title: "黄山辟谣天都峰4月1日开放", isNew: false, isHot: false },
+        { title: "全上海一年的豪宅一天就卖完？", isNew: false, isHot: true },
+        { title: "13岁女孩失联5天:曾到家却未进?", isNew: false, isHot: false },
+        { title: "奔驰加塞事件原视频", isNew: false, isHot: false },
+        { title: "月薪15000住家阿姨的一天", isNew: false, isHot: false },
+
+        { title: "吴艳妮:完全不能接受被叫做网红", isNew: true, isHot: false },
+        { title: "校方通报高校老师诱骗女生当小三", isNew: false, isHot: false },
+        { title: "萌娃大哭要出去玩 见门开了秒变脸", isNew: false, isHot: false },
+        { title: "万达将获约600亿元投资", isNew: false, isHot: false },
+        { title: "95后女警眼神杀吓懵嫌疑人", isNew: false, isHot: true },
+        { title: "男子账户里的2470万保住了", isNew: false, isHot: false },
+    ];
+    
+    let currentDataIndex = 0;
+    let startIndex = 0;
+    //换一换渲染数据的方法实现
     function updateList(isBlack) {
         const colorIndexNow = colorIndex;
-        const currentData = allTestData[currentDataIndex];
+        const currentData = allTestData;
         let html = "";
-        const startIndex = currentDataIndex * 6;
-    
-        for (let i = 0; i < currentData.length; i += 3) {
-            html += "<ul class='middle-context'>";
-            for (let j = i; j < i + 3 && j < currentData.length; j++) {
-                const data = currentData[j];
-                const liIndex = j - i + 1;
-                const dataIndex = startIndex + j;
+        const remainingDataCount = currentData.length - startIndex;
+        const iterations = Math.min(remainingDataCount, 6);
+        for (let i = 0; i < iterations; i += 3) {
+            const items = currentData.slice(startIndex + i, startIndex + i + 3).map((data, index) => {
+                const liIndex = index + 1;
+                const dataIndex = startIndex + i + index;
                 let indexContent = dataIndex;
                 let liClass = `li-${liIndex}`;
-                let classes = isBlack ? `${liClass} ${dataIndex <= 3 ? `one two three` : ""}` : `${liClass}`;
+                let classes = isBlack ? `${liClass} ${dataIndex <= 3 ? 'one two three' : ''}` : `${liClass}`;
                 let linkContent = `<a href="#" class="custom-link">${data.title}</a>`;
-                if (dataIndex === 0) {
-                    let imageUrl = 'https://img2.imgtp.com/2024/04/14/EFhJMrmN.png';
-                    if (modeBlockVisible && colorIndexNow === 1) { imageUrl = 'https://img2.imgtp.com/2024/04/15/6MZy22vi.png'; }
-                    else if (modeBlockVisible && colorIndexNow === 2) { imageUrl = 'https://img2.imgtp.com/2024/04/15/BXypA2gb.png'; }
-                    indexContent = `<img src='${imageUrl}' alt='No.1' class='top-image'>`;
-                }
+                indexContent = detailChange(dataIndex, colorIndexNow, indexContent);
                 if (data.isNew) { linkContent += `<span class="new">新</span>`; }
                 if (data.isHot) { linkContent += `<span class="hot">热</span>`; }
-                html += `<li class="${classes}">${indexContent}${linkContent}</li>`;
-            }
-            html += "</ul>";
+                return `<li class="${classes}">${indexContent}${linkContent}</li>`;
+            }).join('');
+            html += `<ul class='middle-context'>${items}</ul>`;
         }
         list.innerHTML = html;
+        startIndex += iterations;
+        if (startIndex >= currentData.length) {
+            startIndex = 0;
+        }
+    }    
+    function detailChange(dataIndex, colorIndexNow, indexContent){
+        if (dataIndex !== 0) return indexContent; // 如果不是 dataIndex 为 0，则直接返回原 indexContent
+        let imageUrl = 'https://img2.imgtp.com/2024/04/14/EFhJMrmN.png';
+        switch (true) {
+            case modeBlockVisible && colorIndexNow === 1:
+                imageUrl = 'https://img2.imgtp.com/2024/04/15/6MZy22vi.png';
+                break;
+            case modeBlockVisible && colorIndexNow === 2:
+                imageUrl = 'https://img2.imgtp.com/2024/04/15/BXypA2gb.png';
+                break;
+            default:
+                break;
+        }
+        return `<img src='${imageUrl}' alt='No.1' class='top-image'>`;                    
     }
     
     // 监听器，换一换功能实现
@@ -835,8 +858,6 @@ window.onload = function () {
     });
     // 初始化列表
     updateList(isBlack);
-
-
 
 
     //针对页面底部的隐藏与显示的调试

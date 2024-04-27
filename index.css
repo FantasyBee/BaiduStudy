@@ -510,24 +510,6 @@
             padding: 10px 0;
         }
 
-        /* 搜索框内清空按钮样式 */
-        /* .clearBtn {
-            position: absolute;
-            display: none;
-            max-width: 30px;
-            max-height: 30px;
-            z-index: 80;
-            margin-left: 240px;
-            margin-top: 3px;
-        }
-        .clearBtn img {
-            width: 100%;
-            height: 100%;
-        }
-        .clearBtn:hover {
-            cursor: pointer;
-        } */
-
         /* 输入框样式 */
         .input1 {
             position: relative;
@@ -720,7 +702,6 @@
             display: flex;
             flex-direction: row;
             flex-wrap: nowrap;
-
         }
 
         .key .baidu-hot-search a {
